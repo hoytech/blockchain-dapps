@@ -128,10 +128,69 @@
 
 <section data-markdown><script type="text/template">
 
-## Uncoordinated meeting
+## The original peer-to-peer app
 
-* Suppose I ask you to meet me in Paris tomorrow at noon
-* But I don't say **where** in Paris
+<img src="straight.jpg" style="background-color: white" />
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Radio
+
+* Once people started using telegraph over the radio, there was a need to coordinate
+* Large range of possible frequencies
+  * How do you find somebody to communicate with?
+  * How do you share with others?
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Band-plan
+
+<img src="bandplan.png" width="70%" style="background-color: white" />
+
+* "Band-plan" is centralized system that allocates frequencies
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## PSK-31
+
+<img src="psk31.png" style="background-color: white" />
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Calling frequencies
+
+* But even inside band-plan allocations, need to choose frequencies
+* You're more likely to find somebody if you listen to 14.100000 MHz than 14.171383
+  * Why?
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Coordination games
+
+* Suppose you and I would like to meet
+* I ask you to meet me in Paris tomorrow at noon
+* But I don't say *where* in Paris
 * Where do you go?
 
 </script></section>
@@ -149,11 +208,68 @@
 ## Focal point (Schelling point)
 
 * Why did you pick the Eiffel Tower?
-  * Why not the Arc de Triomphe, or some random cafe?
-* Because the Eiffel tower is most famous, and probably that is what I will pick too
-  * And I will pick it because I assume you are most likely to pick it, because...
-    * You assume I will pick it, because...
+  * Why not the Arc de Triomphe, or Notre-Dame, or some random cafe?
+* Because the Eiffel tower is probably what *I* will pick. Why?
+  * Because I assume you will pick it. Why?
+    * Because you assume I will assume you will pick it. Why?
       * ...
+
+</script></section>
+
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Finding peers (IRC)
+
+* In peer to peer apps, how do you find your peers?
+* Early versions of bitcoin would join IRC channels #bitcoin00, #bitcoin01, ...
+  * The users in there are probably running bitcoin software
+  * Try to connect to them
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Finding peers (DNS)
+
+* Many p2p applications also look-up DNS hostnames, which contain lists of peers
+      $ host seed.bitcoin.sipa.be
+      seed.bitcoin.sipa.be has address 51.77.251.16
+      seed.bitcoin.sipa.be has address 38.242.12.100
+      seed.bitcoin.sipa.be has address 109.130.21.25
+      seed.bitcoin.sipa.be has address 52.221.194.33
+      seed.bitcoin.sipa.be has address 52.192.233.133
+      ...
+* Sometimes clients embed IP addresses of stable nodes at the time the software was released
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Finding peers (other peers)
+
+<img src="eclipse.svg" style="background-color: white" />
+
+* Usually the P2P protocol has a way to tell peers about other nodes
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## Eclipse attack
+
+<img src="eclipse2.svg" style="background-color: white" />
+
+* An eclipse attack is when an evil peer tries to isolate a peer from the rest of the network
 
 </script></section>
 
