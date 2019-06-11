@@ -126,6 +126,10 @@
 
 ## Lesson Topics
 
+* Coordination
+* The nature of trust
+* Lab
+
 </script></section>
 
 
@@ -244,6 +248,17 @@
 
 <section data-markdown><script type="text/template">
 
+## Keynesian beauty contest
+
+* Where people are incentivized to make choices not based on what they like, but what they think other people will like
+* Originally described stock markets, but widely applicable
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
 ## Finding peers (IRC)
 
 * In peer to peer apps, how do you find your peers?
@@ -268,7 +283,7 @@
       seed.bitcoin.sipa.be has address 52.221.194.33
       seed.bitcoin.sipa.be has address 52.192.233.133
       ...
-* Sometimes clients embed IP addresses of nodes at the time the software was released
+* Sometimes clients also embed IP addresses of nodes at the time the software was released
 
 </script></section>
 
@@ -356,7 +371,7 @@
 
 <img src="qscan.svg" style="background-color: white" />
 
-* Sometimes you can learn information about a network by timing packets
+* Sometimes you can learn information about a network by timing requests
 * This is called a timing **side-channel**
 
 </script></section>
@@ -382,6 +397,12 @@
 * "Username/password invalid" message prevents hacker from knowing if a username exists
   * Or does it? What if we time the request?
 
+</script></section>
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## 15 minute break
 
 </script></section>
 
@@ -393,6 +414,20 @@
 ## DNS Control Hierarchy
 
 <img src="dnstrust.svg" style="background-color: white" />
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## DNS is Insecure
+
+<img src="dnsinsecure.svg" style="background-color: white" />
+
+* Anyone who can view your DNS requests can forge fake responses
+  * Your ISP, anyone on your local network, etc
+* "Cache poisoning"
 
 </script></section>
 
@@ -419,7 +454,8 @@
 * If they just setup a server, it could be shutdown
   * Then they would lose access to their bots
 * Similar problem domain with decentralized apps
-  * Uncoordinated, P2P
+  * Needs special coordination
+    * Sometimes P2P
 
 </script></section>
 
@@ -430,7 +466,7 @@
 ## Domain generation algorithms
 
 * Popularized by conficker botnet
-* Every bot generates a list of gibberish domain names seeded with current day:
+* Every bot generates a list of gibberish domain names seeded with current date:
   * Today: **rhqysblftmjhlkc.com**
   * Tomorrow: **fwhmvhrixqdlaqm.com**
 * Every bot tries to connect to these domains for commands
@@ -440,9 +476,133 @@
 
 
 
+
 <section data-markdown><script type="text/template">
 
-## Lab 1: Shrinker
+## SSL/TLS
+
+* Secure Session Layer, now called Transport Security Layer
+* Connections are **encrypted**, so nobody can see what you send/receive
+* Connections are **authenticated** so you are sure you are talking to the site you mean to
+  * But, must trust Certificate Authorities
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Certificate Authorities
+
+* List of public keys stored in your web browser
+* These public keys are used to sign keys of sites you visit
+  * Sites present their key along with a signature from a CA so your browser knows its valid
+* How do CAs verify sites in the first place?
+  * Usually "Domain Validation" (basically a DNS lookup)
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Trust components of a URL
+
+<img src="urltrust.svg" style="background-color: white" />
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Trusting software
+
+* Unless you have downloaded and installed special software, you depend on the trust components of URLs, every time you visit them
+* Browser downloads javascript code from sites you visit, so those sites could change the code at any time
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Trusting trust
+
+* Do you trust your browser?
+* How about the tools used to build your browser?
+* How about the tools used to build those tools?
+* Famous article by Ken Thompson:
+  * [Reflections on Trusting Trust](https://blog.acolyer.org/2016/09/09/reflections-on-trusting-trust/)
+
+</script></section>
+
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## web3/dapps
+
+* Concept for a semi-decentralized application
+* Usually uses normal URLs, but your identity and authorization is isolated from the websites
+* The blockchain is used as a back-end
+  * Partially: Most dapps also need normal back-ends also
+
+</script></section>
+
+
+<section>
+
+<p data-markdown>
+## Metamask
+</p>
+
+<div class="left">
+    <img src="metamask.jpg" style="float: left; border:0px; background-color: white" />
+</div>
+
+<div class="right"><p data-markdown>
+* Browser extension: webapps cannot access your private keys
+* Browser needs to request your permission for various actions
+</p></div>
+
+</section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Exercise: Secure Scuttlebutt
+
+* A "Scuttlebutt" is a sailing term for gossip and socializing
+* SSB is decentralized social media
+* Download and install patchwork: [https://www.scuttlebutt.nz/](https://www.scuttlebutt.nz/)
+  * It will try to connect to friends on your local network, no servers needed
+  * You can add "pubs" which are internet servers that let you keep in touch later
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## 15 minute break
+
+</script></section>
+
+
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Lab 1: FIXME
 
 [shrinker.html](shrinker.html)
 
