@@ -1,0 +1,36 @@
+<style>
+body { font-size: 20px; }
+div { margin-top: 20px; }
+
+ul > li {
+  margin-top: 10px;
+}
+</style>
+
+<h1>Lab 1: Timing Leak</h1>
+
+<div>Create a program to crack the password of a server that leaks information via a timing side-channel. Your submission should be only a modified crackPassword.js file. <b>Do not submit .zip files</b> or anything else, or you will receive 0 (but you can re-submit).</div>
+
+<div>The password server program is a simple server that checks a provided password letter by letter, and gives up when it sees a match. It has an extra sleep() in between each letter to make the timing differences extra obvious.</div>
+
+<div>The point of this lab is to learn about side-channel attacks, and to get some practice with writing javascript code that uses express and async/await.</div>
+
+<ul>
+  <li>Download the files <a href="passwordServer.js">passwordServer.js</a> and <a href="crackPassword.js">crackPassword.js</a>.</li>
+  <li>
+    Install the npm dependencies:
+    <pre>npm install express node-fetch</pre>
+  </li>
+  <li>
+    Start the password server:
+    <pre>node passwordServer.js</pre>
+  </li>
+  <li>
+    Run the crack password program:
+    <pre>node crackPassword.js</pre>
+    It will guess each letter of the alphabet as the password. See if any particular letter takes longer than others.
+  </li>
+  <li>
+    Edit the program to recover the password.
+  </li>
+</ul>

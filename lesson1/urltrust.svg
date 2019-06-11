@@ -329,8 +329,8 @@
      showgrid="false"
      borderopacity="1.0"
      inkscape:current-layer="layer1"
-     inkscape:cx="180.07939"
-     inkscape:cy="174.23154"
+     inkscape:cx="130.79368"
+     inkscape:cy="171.3744"
      inkscape:window-y="25"
      inkscape:window-height="1029"
      inkscape:pageopacity="0.0"
@@ -356,14 +356,14 @@
          x="177.28326"
          y="129.54491"
          style="stroke-width:0.88315237"><tspan
-   style="fill:#008000;stroke-width:0.88315237"
-   id="tspan15624">https</tspan>://<tspan
-   style="fill:#0000ff;stroke-width:0.88315237"
-   id="tspan15626">ipfs.io</tspan>/<tspan
-   style="fill:#ff00ff"
-   id="tspan15696">ipfs/</tspan><tspan
-   style="fill:#ff00ff;stroke-width:0.88315237"
-   id="tspan15628">0xc1de...</tspan></tspan></text>
+           style="fill:#008000;stroke-width:0.88315237"
+           id="tspan15624">https://</tspan><tspan
+           style="fill:#0000ff;stroke-width:0.88315237"
+           id="tspan15626">ipfs.io</tspan><tspan
+           style="fill:#ff00ff"
+           id="tspan15696">/ipfs/</tspan><tspan
+           style="fill:#ff00ff;stroke-width:0.88315237"
+           id="tspan15628">0xc1de...</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:26.60310555px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.66507757"
@@ -406,17 +406,17 @@
          x="188.81773"
          y="341.35999"
          style="fill:#ff00ff;stroke-width:0.66507757"
-         id="tspan15667-9">ipfs.io can send whatever they want</tspan><tspan
+         id="tspan15667-9">Server can send whatever it wants</tspan><tspan
          sodipodi:role="line"
          x="188.81773"
          y="374.61386"
          style="fill:#ff00ff;stroke-width:0.66507757"
-         id="tspan15692">(hash doesn't matter, they send the</tspan><tspan
+         id="tspan15694">(hash doesn't matter, your browser</tspan><tspan
          sodipodi:role="line"
          x="188.81773"
          y="407.86774"
          style="fill:#ff00ff;stroke-width:0.66507757"
-         id="tspan15694">verification code too, if any)</tspan></text>
+         id="tspan935">won't verify it anyway)</tspan></text>
   </g>
   <metadata
      id="metadata189">
@@ -433,7 +433,7 @@
             <dc:title>Openclipart</dc:title>
           </cc:Agent>
         </dc:publisher>
-        <dc:title></dc:title>
+        <dc:title />
         <dc:date>2009-04-05T07:24:56</dc:date>
         <dc:description>Firewall symbol by HASH(0x89c79d4). From old OCAL site.</dc:description>
         <dc:source>https://openclipart.org/detail/24076/firewall-by-anonymous-24076</dc:source>
