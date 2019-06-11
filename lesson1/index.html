@@ -93,6 +93,10 @@
         z-index:-10;
         width:50%;
       }
+
+      .smallCode pre code {
+        font-size: 80%;
+      }
     </style>
   </head>
 
@@ -152,6 +156,19 @@
 
 <section data-markdown><script type="text/template">
 
+## Modern-day decentralized radio
+
+<img src="psk31.png" style="background-color: white" />
+
+* A world-wide chatroom
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
 ## Band-plan
 
 <img src="bandplan.png" width="70%" style="background-color: white" />
@@ -161,14 +178,6 @@
 </script></section>
 
 
-
-<section data-markdown><script type="text/template">
-
-## PSK-31
-
-<img src="psk31.png" style="background-color: white" />
-
-</script></section>
 
 
 
@@ -219,6 +228,19 @@
 
 
 
+<section data-markdown><script type="text/template">
+
+## Focal point (Schelling point)
+
+* Another example: You are locked in a room, and a stranger is locked in a separate room
+* You are both given a list of numbers. If you pick the same number you are both released:
+* 918348, 18773, 100000, 819991, 34380
+* Which do you pick?
+  * Why?
+
+</script></section>
+
+
 
 <section data-markdown><script type="text/template">
 
@@ -238,7 +260,7 @@
 
 ## Finding peers (DNS)
 
-* Many p2p applications also look-up DNS hostnames, which contain lists of peers
+* Many p2p applications also look-up DNS hostnames, which resolve to lists of peers
       $ host seed.bitcoin.sipa.be
       seed.bitcoin.sipa.be has address 51.77.251.16
       seed.bitcoin.sipa.be has address 38.242.12.100
@@ -246,7 +268,7 @@
       seed.bitcoin.sipa.be has address 52.221.194.33
       seed.bitcoin.sipa.be has address 52.192.233.133
       ...
-* Sometimes clients embed IP addresses of stable nodes at the time the software was released
+* Sometimes clients embed IP addresses of nodes at the time the software was released
 
 </script></section>
 
@@ -269,7 +291,7 @@
 
 <img src="eclipse2.svg" style="background-color: white" />
 
-* An eclipse attack is when an evil peer tries to isolate a peer from the rest of the network
+* An eclipse attack is when a malicious actor tries to isolate a node from the rest of the network
 
 </script></section>
 
@@ -303,12 +325,12 @@
 
 <section data-markdown><script type="text/template">
 
-## Peer-to-peer
+## P2P difficulties
 
 <img src="firewall3.svg" style="background-color: white" />
 
 * Firewalls/NATs stop inbound connections
-* Make P2P protocols harder
+* Makes peer-to-peer protocols harder
 
 </script></section>
 
@@ -326,6 +348,95 @@
 
 </script></section>
 
+
+
+<section data-markdown><script type="text/template">
+
+## Detecting firewalls
+
+<img src="qscan.svg" style="background-color: white" />
+
+* Sometimes you can learn information about a network by timing packets
+* This is called a timing **side-channel**
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Timing side-channel
+
+    let user = db_query("SELECT * FROM user WHERE username = ?", username);
+
+    if (!user) {
+        return error("Username/password invalid");
+    }
+
+    if (!verifyHashedPassword(user.hashedPassword, password)) {
+        return error("Username/password invalid");
+    }
+
+    return success();
+
+* "Username/password invalid" message prevents hacker from knowing if a username exists
+  * Or does it? What if we time the request?
+
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## DNS Control Hierarchy
+
+<img src="dnstrust.svg" style="background-color: white" />
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Botnets
+
+* A botnet is a group of machines ("bots") that have been compromised by a virus
+* The virus author ("botnet herder") controls the bots and has them perform tasks
+  * Click fraud
+  * Denial of Service attacks
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Command-and-control
+
+* How do botnet herders control their bots?
+* If they just setup a server, it could be shutdown
+  * Then they would lose access to their bots
+* Similar problem domain with decentralized apps
+  * Uncoordinated, P2P
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Domain generation algorithms
+
+* Popularized by conficker botnet
+* Every bot generates a list of gibberish domain names seeded with current day:
+  * Today: **rhqysblftmjhlkc.com**
+  * Tomorrow: **fwhmvhrixqdlaqm.com**
+* Every bot tries to connect to these domains for commands
+* Botnet herder just has to register one of these domains and put up temporary server
+
+</script></section>
 
 
 
