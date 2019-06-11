@@ -112,7 +112,7 @@
 
 ## Decentralized Applications
 
-### Lesson 1: FIXME
+### Lesson 1: Coordination and Trust
 
 *Doug Hoyte, June 2019*
 
@@ -382,13 +382,13 @@
 
 ## Timing side-channel
 
-    let user = db_query("SELECT * FROM user WHERE username = ?", username);
+    let user = db_query("SELECT * FROM user WHERE username = ?", request.username);
 
     if (!user) {
         return error("Username/password invalid");
     }
 
-    if (!verifyHashedPassword(user.hashedPassword, password)) {
+    if (!verifyHashedPassword(user.hashedPassword, request.password)) {
         return error("Username/password invalid");
     }
 
