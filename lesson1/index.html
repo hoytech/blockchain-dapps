@@ -400,9 +400,40 @@
 </script></section>
 
 
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Timing leak: string comparison
+
+<img src="string-comparison.svg" style="background-color: white" />
+
+* Even very small differences can be detected, using lots of tries and advanced statistics
+* Some programs compare a secret with a user-provided value. Timing leak: Comparing characters left-to-right and stopping at first invalid character
+
+</script></section>
+
+
+
+
 <section data-markdown class="smallCode"><script type="text/template">
 
 ## 15 minute break
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Why decentralize?
+
+* Eliminate Single Points of Failure
+  * If everyone relies on a centralized service, everyone loses service if it breaks or goes away
+* Diffuse control
+  * Absolute power corrupts absolutely
+  * Better to give large numbers of people little bits of power
 
 </script></section>
 
@@ -430,6 +461,22 @@
 * "Cache poisoning"
 
 </script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Federation
+
+* Partially-decentralized network structure
+* Servers are loosely connected to each other, and you can choose which ones to use
+  * IRC/XMPP (federated chat)
+  * Mastadon (federated twitter)
+  * ActivityPub (federated facebook)
+
+</script></section>
+
 
 
 
@@ -476,18 +523,6 @@
 
 
 
-
-<section data-markdown><script type="text/template">
-
-## Federation
-
-* Partially-decentralized network structure
-* Servers are loosely connected to eachother, and you can choose which one to use
-  * IRC/XMPP (federated chat)
-  * Mastadon (federated twitter)
-  * ActivityPub (federated facebook)
-
-</script></section>
 
 
 
