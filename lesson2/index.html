@@ -141,6 +141,69 @@
 
 
 
+
+<section data-markdown><script type="text/template">
+
+## HTML
+
+* HTML is "marked-up" text that is sent by web servers to web browsers
+* Usually also includes:
+  * CSS for styles and layout
+  * Javascript for extra functionality
+* Browsers only understand this trio: HTML+CSS+JS
+  * All other languages need to be "transpiled" to them
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Inline vs. block elements
+
+<img src="inline-block.png" style="background-color: white" />
+
+* Two main layout categories: block and inline
+  * Canonical block element: `div`
+  * Canonical inline element: `span`
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Semantic vs. non-semantic tags
+
+Semantic:
+
+    <header>Welcome!</header>
+    <section>Content goes here</section>
+    <aside>Oh BTW, some other stuff</aside>
+    <footer>(C) 2019</footer>
+
+Non-semantic:
+
+    <div class="header">Welcome!</div>
+    <div class="main-body">Content goes here</div>
+    <div class="aside">Oh BTW, some other stuff</div>
+    <div class="footer">(C) 2019</div>
+
+</script></section>
+
+</script></section>
+
+
+
+
+
+
+
+
+
+
 <section data-markdown><script type="text/template">
 
 ## Server-side rendering
@@ -168,6 +231,7 @@
 
 
 
+
 <section data-markdown><script type="text/template">
 
 ## Document Object Model
@@ -176,6 +240,155 @@
 
 </script></section>
 
+
+
+
+<section data-markdown><script type="text/template">
+
+## jQuery
+
+jQuery was a very popular way to modify the DOM:
+
+```html
+<div>
+  Hello, <span id="name" />!
+</div>
+```
+
+JS using jQuery:
+
+```javascript
+$('#name').html("Jane Doe");
+```
+
+* Note `$` is a regular variable name in Javascript (so that perl/PHP coders could use `$name` and so on)
+* `"#name"` is a **CSS selector**
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## CSS Selectors
+
+|||
+|-|-|
+| `#name` | The element with id "name" (ids should be unique) |
+| `.name` | All elements with class "name" |
+| `div` | All `div` elements |
+| <code>div#i&nbsp;span.c</code> | All `span`s with class `c` inside the `div` with id `i` (even nested) |
+| .c > span | All `span`s that are direct children of any element with class `c` |
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## ES6
+
+* New version of Javascript (also known as ECMAscript) standard: version 6
+* Doesn't work in all browsers, so must be "transpiled"
+  * Babel is a tool that does this
+  * Webpack is a dev framework that uses Babel (among others)
+* Most React tool-chains heavily use ES6 and Webpack
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## ES6 feature: arrow functions
+
+In ES6, this anonymous function:
+
+    function(a, b) { return a + b; }
+
+can be written like:
+
+    (a, b) => a + b
+
+* This saves typing, and also [does not rebind `this`](https://hackernoon.com/javascript-es6-arrow-functions-and-lexical-this-f2a3e2a5e8c4) (very useful for event handlers)
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## ES6 feature: interpolation
+
+In ES6, instead of concatenating things together like this:
+
+```javascript
+"hello, " + name + ", the time is: " + currentTime
+```
+
+You can use back-quotes:
+
+```javascript
+`hello, ${name}, the time is ${currentTime}`
+```
+
+Any JS can live inside the `{}`s:
+
+```javascript
+`hello, ${name}, the time is ${new Date()}`
+```
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## ES6 feature: lexical binding
+
+The old javascript `var` keyword has confusing "function hoisting" behaviour:
+
+```javascript
+> function f1() { console.log(a); var a; }
+> f1()
+undefined
+```
+
+`let` prevents a lot of tricky bugs:
+
+```javascript
+> function f2() { console.log(a); let a; }
+> f2()
+ReferenceError: a is not defined
+    at f2 (repl:1:28)
+```
+
+* Always use `let` (or `const`) instead of `var`
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## ES6 feature: class
+
+* Javascript uses prototype-based object which is confusing for people who haven't used it before
+* ES6 lets you pretend Javascript uses class-based objects:
+    ```javascript
+    class MyObj {
+        constructor() {
+            this.val = 1;
+        }
+    }
+
+    let o = new MyObj();
+    ```
+
+</script></section>
 
 
 
