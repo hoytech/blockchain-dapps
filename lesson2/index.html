@@ -97,6 +97,10 @@
       .smallCode pre code {
         font-size: 80%;
       }
+
+      .smallText {
+        font-size: 80%;
+      }
     </style>
   </head>
 
@@ -127,7 +131,8 @@
 ## Lesson Topics
 
 * The browser
-* React
+* React basics
+* Hooks, web3
 
 </script></section>
 
@@ -605,38 +610,26 @@ ReferenceError: a is not defined
 
 
 
-<section data-markdown class="smallCode"><script type="text/template">
+<section data-markdown class="smallCode smallText"><script type="text/template">
 
 ## React data-flow
 
 <img src="react-dataflow.svg" style="background-color: white" />
 
-* React is a framework that takes care of updating the DOM for you
-* You just write functions on how data should be rendered, and give React data and it maintains DOM for you
+* React is a framework that takes care of updating the DOM
+* You just write functions on how data should be rendered, give React data and it maintains DOM for you
+  * Think about how the UI should look at any given moment, not how to change it over time
 
 </script></section>
 
 
 
 
-<section data-markdown class="smallCode"><script type="text/template">
+<section data-markdown class=""><script type="text/template">
 
-## Getting started
+## React only updates what's necessary
 
-Install `create-react-app`
-
-    npm install -g create-react-app
-
-Make a basic app in directory `my-app`:
-
-    create-react-app my-app
-
-Start dev server:
-
-    cd my-app
-    npm start
-
-Edit the file `my-app/src/App.js`, and see changes in browser
+<img src="granular-dom-updates.gif" style="background-color: white" />
 
 </script></section>
 
@@ -667,17 +660,17 @@ Edit the file `my-app/src/App.js`, and see changes in browser
 
 ## JSX
 
-* Although the files in `src` end in `.js`, they are pre-processed by babel to add "JSX" features
+* Although the files in `src` end in `.js`, they are pre-processed by babel to add JSX features, like embedding HTML tags
 
 * This JSX:
       render() {
-          return <div>Hello!</div>;
+          return <div id="1">Hello!</div>;
       }
 
 * Is converted to this JS:
 
       render() {
-          return React.createElement('div', null, 'Hello!');
+          return React.createElement('div', { id: "1" }, 'Hello!');
       }
 
 </script></section>
@@ -731,7 +724,7 @@ Any javascript code can go inside the `{}`s:
 
 ## XSS-protection
 
-* Cross-site scripting attacks are protected against
+* Cross-site scripting attacks protection
 * This will just show as an ugly looking name, and will not execute the alert:
 
       class MyWidget extends Component {
@@ -760,6 +753,18 @@ Any javascript code can go inside the `{}`s:
 
 </script></section>
 
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## class versus className
+
+* Since JSX is converted to Javascript, can't use javascript keywords
+* For example, `class` cannot be used, so you have to use `className`:
+      <div className="header"></div>
+
+</script></section>
 
 
 
@@ -811,13 +816,164 @@ Any javascript code can go inside the `{}`s:
 
 
 
-<section data-markdown><script type="text/template">
+<section data-markdown class="smallCode"><script type="text/template">
 
-## Lab 1: Timing Leak
+## Inline styles
 
-[timing-leak.html](timing-leak.html)
+* React often uses inline styles. You pass in an object instead of a string:
+
+      <div style={{ backgroundColor: 'red', height: 25, }} />
+
+* Note the double brackets: `{{` (why?)
+* Style names are camelCase, not kebab-case
+* You can use numbers for pixel sizes
+  * 25 converted into "25px"
 
 </script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Arrays and keys
+
+      render() {
+          let names = ['Alice', 'Bob', 'Carol'];
+          let elems = names.map(n => <span key={n}>{n}</span>);
+          return <div>Names: {elems}</div>;
+      }
+
+* You can provide arrays of elements too, and they are rendered in order
+* You must provide a unique `key` prop to each element though
+  * Needed to make DOM updates faster/more reliable
+
+</script></section>
+
+
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## State
+
+      class MyCounter extends Component {
+          constructor(props) {
+              super(props);
+              this.state = { count: 0 };
+              setInterval(() => this.setState({ count: this.state.count + 1 }), 1000);
+          }
+
+          render() {
+              return <div>Current count: {this.state.count}</div>;
+          }
+      }
+
+* State is internal data stored in the component
+* `setState` modifies the state and (eventually) causes re-render
+  * Note use of arrow function
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode" style="font-size: 90%"><script type="text/template">
+
+## Events
+
+      class MyCounterButton extends Component {
+        constructor(props) {
+          super(props);
+          this.state = { count: 0 }; 
+        }
+
+        render() {
+          return <div>
+            Current count: {this.state.count}
+            <button onClick={() => this.setState({ count: this.state.count + 1 })}>
+              Add 1
+            </button>
+          </div>;
+        }
+      }
+
+* `onClick` not `onclick` (events are camelCase)
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode" style="font-size: 90%"><script type="text/template">
+
+## Binding this
+
+* This will not work:
+      clickHandler() { ... }
+
+      render() {
+        return <button onClick={this.clickHandler}>OK</button>;
+      }
+
+* Either bind `this` yourself:
+
+        return <button onClick={this.clickHandler.bind(this)}>OK</button>;
+
+* Or use arrow functions:
+
+        return <button onClick={() => this.clickHandler()}>OK</button>;
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode" style="font-size: 80%"><script type="text/template">
+
+## Component life-cycle
+
+* Your component can implement [special methods](https://reactjs.org/docs/react-component.html) that get called at various times:
+  * `constructor` - This is when the component is first created
+  * `componentDidMount` - After component is added to the DOM
+  * `shouldComponentUpdate` - When react is trying to decide if it should re-render the component
+  * `componentWillUmount` - Right before component removed from DOM
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Exercise: Getting started
+
+Install `create-react-app`
+
+    npm install -g create-react-app
+
+Make a basic app in directory `my-app`:
+
+    create-react-app my-app
+
+Start dev server:
+
+    cd my-app
+    npm start
+
+Edit the file `my-app/src/App.js`, and see changes in browser
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## 15 minute break
+
+</script></section>
+
+
 
 
 
