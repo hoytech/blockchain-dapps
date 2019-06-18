@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>React</title>
+    <title>Modern web development</title>
 
     <meta name="author" content="Doug Hoyte">
 
@@ -112,7 +112,7 @@
 
 ## Decentralized Applications
 
-### Lesson 2: React
+### Lesson 2: Modern web development
 
 *Doug Hoyte, June 2019*
 
@@ -125,6 +125,9 @@
 <section data-markdown><script type="text/template">
 
 ## Lesson Topics
+
+* The browser
+* React
 
 </script></section>
 
@@ -232,13 +235,26 @@ Non-semantic:
 
 
 
-<section data-markdown><script type="text/template">
 
+
+
+<section>
+
+<p data-markdown>
 ## Document Object Model
+</p>
 
-<img src="dom.svg" style="background-color: white" />
+<div class="left">
+    <img style="float: left; background-color: white" src="dom.svg" />
+</div>
 
-</script></section>
+<div class="right"><p data-markdown>
+* How do you modify a page?
+* Standard interface called DOM
+* An HTML page is represented as a tree of tags, which can be added, modified, removed
+</p></div>
+
+</section>
 
 
 
@@ -258,11 +274,12 @@ jQuery was a very popular way to modify the DOM:
 JS using jQuery:
 
 ```javascript
-$('#name').html("Jane Doe");
+$("#name").html("Jane Doe");
 ```
 
 * Note `$` is a regular variable name in Javascript (so that perl/PHP coders could use `$name` and so on)
 * `"#name"` is a **CSS selector**
+  * Mini-language for specifying portions of DOM
 
 </script></section>
 
@@ -299,17 +316,177 @@ $('#name').html("Jane Doe");
 
 <section data-markdown><script type="text/template">
 
+## Stylesheets versus inline styles
+
+Styles can be placed *inline* on an element:
+
+```html
+<div style="background-color: white"></div>
+```
+
+Or, as a separate style tag, either embeded in the HTML or in a separate `.css` file:
+
+```html
+<style>
+.abc {
+    background-color: white;
+}
+</style>
+
+<div class="abc"></div>
+```
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Stylesheets versus inline styles
+
+* Inline styles take precedence over stylesheets
+* Inline styles can easily be changed or added by JS
+  * React uses inline styles a lot
+* Stylesheets can be more efficient in some cases
+  * Less duplicated text, CSS engines perform better
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Dynamic stylesheets
+
+* Stylesheets can also be added/edited with JS using [JSS](https://github.com/cssinjs/jss) or [directly](https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript)
+* If you want to make a style change that affects many elements, JSS is much more efficient, since no DOM modifications required
+  * Purely uses CSS engine
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## SASS
+
+* SASS is enhanced CSS
+* Doesn't work in browsers, so requires a special "transpiler" to convert it to normal CSS
+  * Usually setup for you automatically with webpack
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## SASS feature: nested CSS
+
+```css
+#main {
+    .widget {
+        >div { padding 5px; }
+
+        .highlight { color: yellow; }
+    }
+}
+```
+
+Compiles to:
+
+```css
+#main .widget >div { padding 5px; }
+#main .widget .highlight { color: yellow; }
+```
+
+* Note that "`#main .widget`" is not duplicated
+  * DRY principle
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## SASS feature: variables
+
+```css
+$brand-color: #af32f1;
+
+.help-text {
+    color: $brand-color;
+}
+```
+
+* Makes it easy to update things since you only have to change one place
+
+</script></section>
+
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Events
+
+In your HTML you can designate some javascript to run when some event is triggered:
+
+```html
+<button onclick="handleClickEvent()">Click me!</button>
+```
+
+In your JS:
+
+```javascript
+function handleClickEvent() {
+    // do some stuff
+}
+```
+
+* Event handling is subtly different between browsers, but with react you don't need to care
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Event propagation
+
+<img src="event-bubbling.png" />
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Event delegation
+
+* If you have a large number of elements, it may be inefficient to put handler on each one
+* [Event delegation](https://javascript.info/event-delegation) relies on event propagation rules:
+  * Instead of many event handlers, put a single event listener higher in the tree
+
+</script></section>
+
+
+
+
+
+<section data-markdown><script type="text/template">
+
 ## ES6
 
 * New version of Javascript (also known as ECMAscript) standard: version 6
-* Doesn't work in all browsers, so must be "transpiled"
+* Doesn't work in all browsers, so must be "transpiled" (like SASS)
   * Babel is a tool that does this
   * Webpack is a dev framework that uses Babel (among others)
 * Most React tool-chains heavily use ES6 and Webpack
 
 </script></section>
-
-
 
 
 <section data-markdown><script type="text/template">
@@ -327,8 +504,6 @@ can be written like:
 * This saves typing, and also [does not rebind `this`](https://hackernoon.com/javascript-es6-arrow-functions-and-lexical-this-f2a3e2a5e8c4) (very useful for event handlers)
 
 </script></section>
-
-
 
 
 <section data-markdown><script type="text/template">
@@ -354,7 +529,6 @@ Any JS can live inside the `{}`s:
 ```
 
 </script></section>
-
 
 
 <section data-markdown><script type="text/template">
@@ -383,7 +557,6 @@ ReferenceError: a is not defined
 </script></section>
 
 
-
 <section data-markdown><script type="text/template">
 
 ## ES6 feature: class
@@ -401,6 +574,7 @@ ReferenceError: a is not defined
     ```
 
 </script></section>
+
 
 
 
