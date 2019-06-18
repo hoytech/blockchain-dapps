@@ -268,7 +268,7 @@ $('#name').html("Jane Doe");
 
 
 
-<section data-markdown><script type="text/template">
+<section data-markdown style="font-size: 75%"><script type="text/template">
 
 ## CSS Selectors
 
@@ -276,9 +276,21 @@ $('#name').html("Jane Doe");
 |-|-|
 | `#name` | The element with id "name" (ids should be unique) |
 | `.name` | All elements with class "name" |
+| `div, .name` | All divs AND all elements with class "name" |
 | `div` | All `div` elements |
 | <code>div#i&nbsp;span.c</code> | All `span`s with class `c` inside the `div` with id `i` (even nested) |
 | .c > span | All `span`s that are direct children of any element with class `c` |
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Exercise: CSS selectors
+
+[css-selectors.html](css-selectors.html)
 
 </script></section>
 

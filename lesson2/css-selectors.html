@@ -1,0 +1,89 @@
+<style>
+body { font-size: 20px; }
+div { margin-top: 20px; }
+
+ul > li {
+  margin-top: 10px;
+}
+
+#main div {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+#main span {
+  border: 1px solid black;
+}
+
+</style>
+
+<h1>Exercise: CSS Selectors</h1>
+
+<div id="main">
+  <div class="a">div class a</div>
+  <div class="b">div class b</div>
+  <div class="a b">div class a and b</div>
+  <div class="a">div class a
+    <div class="b">div class b</div>
+  </div>
+  <div class="a" id="i">div class a, id i</div>
+  <div class="a">div class a
+    <div class="b">div class b
+      <div class="c">div class c
+        <div class="b">div class b (NESTED!)</div>
+        <span>span</span> <span>span</span> <span>span</span> <span>span</span>
+      </div>
+    </div>
+  </div>
+  <div class="a">class a</div>
+</div>
+
+<div>
+  <input id="sel" placeholder="css selector" />
+  <button onclick="go()">GO!</button>
+</div>
+
+
+<ul>
+  <li>The div with id "i"</li>
+  <li>All span elements</li>
+  <li>The div with id "i" AND all span elements</li>
+  <li>All "class a" divs</li>
+  <li>"class b" divs inside class "a" divs</li>
+  <li>Only "class b" divs that are direct children of a "class a" (not nested)</li>
+</ul>
+
+<script>
+function go() {
+  let allNodes = document.querySelectorAll("#main, #main div, #main span");
+
+  allNodes.forEach(n => {
+    n.style["background-color"] = 'white';
+  });
+
+
+  let sel = document.getElementById('sel').value;
+  if (!sel) return;
+
+  let nodes;
+  try {
+    nodes = document.querySelectorAll("#main " + sel);
+  } catch(e) {
+    alert("FAIL: " + e);
+    return;
+  };
+
+  nodes.forEach(n => {
+    n.style["background-color"] = 'red';
+  });
+}
+
+document.getElementById('sel').addEventListener("keyup", function(event) {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    go();
+  }
+});
+
+document.getElementById('sel').focus();
+</script>
