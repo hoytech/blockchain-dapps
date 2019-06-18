@@ -291,10 +291,10 @@ $("#name").html("Jane Doe");
 
 |||
 |-|-|
+| `div` | All `div` elements |
 | `#name` | The element with id "name" (ids should be unique) |
 | `.name` | All elements with class "name" |
 | `div, .name` | All divs AND all elements with class "name" |
-| `div` | All `div` elements |
 | <code>div#i&nbsp;span.c</code> | All `span`s with class `c` inside the `div` with id `i` (even nested) |
 | .c > span | All `span`s that are direct children of any element with class `c` |
 
@@ -584,6 +584,229 @@ ReferenceError: a is not defined
 
 </script></section>
 
+
+
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Maintaining DOM state is hard
+
+* In jQuery, you may have different views of your data in multiple places in the DOM
+  * Example: Notification badge count, and list of notifications
+* Every change to data you need to update all places in DOM
+  * Difficult to remember what is in DOM already, and what needs to change
+  * Common source of bugs
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## React data-flow
+
+<img src="react-dataflow.svg" style="background-color: white" />
+
+* React is a framework that takes care of updating the DOM for you
+* You just write functions on how data should be rendered, and give React data and it maintains DOM for you
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Getting started
+
+Install `create-react-app`
+
+    npm install -g create-react-app
+
+Make a basic app in directory `my-app`:
+
+    create-react-app my-app
+
+Start dev server:
+
+    cd my-app
+    npm start
+
+Edit the file `my-app/src/App.js`, and see changes in browser
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Components
+
+* In React, everything is done with components
+
+      import React, { Component } from 'react';
+
+      class MyWidget extends Component {
+          render() {
+              return <div>Hello!</div>;
+          }
+      }
+
+* Components must have a `render` method. This should return "HTML" that determines how your component is displayed
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## JSX
+
+* Although the files in `src` end in `.js`, they are pre-processed by babel to add "JSX" features
+
+* This JSX:
+      render() {
+          return <div>Hello!</div>;
+      }
+
+* Is converted to this JS:
+
+      render() {
+          return React.createElement('div', null, 'Hello!');
+      }
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Props
+
+* Props ("properties") are like HTML attributes
+
+      class MyWidget extends Component {
+          render() {
+              return <div>Hello, {this.props.name}!</div>;
+          }
+      }
+
+* Used like this:
+
+      <MyWidget name="John"></MyWidget>
+
+* Or, same:
+
+      <MyWidget name="John" />
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## JSX is javascript
+
+Any javascript code can go inside the `{}`s:
+
+      class MyWidget extends Component {
+          render() {
+              return <div>
+                  Hello, {this.props.name.toUpperCase()}!
+                  The time is now: {new Date()}
+              </div>;
+          }
+      }
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## XSS-protection
+
+* Cross-site scripting attacks are protected against
+* This will just show as an ugly looking name, and will not execute the alert:
+
+      class MyWidget extends Component {
+          let name = `<img src=a onerror="alert('hacked!')" />`;
+
+          render() {
+              return <div>Hello, {name}!</div>;
+          }
+      }
+
+* React does have [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml), but be careful!
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Flag props
+
+* Sometimes you'll see a prop with no value:
+      <MyWidget enableFoo />
+* This sets `this.props.enableFoo` to `true`
+* Useful for toggling on/off features in your components
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Props containing components
+
+* You can also pass elements as props:
+
+      let myText = <div>Hello <b>world</b></div>;
+
+      return <MyWidget text={myTest} />;
+
+* Then this can be used as a *child element*:
+
+      class MyWidget extends Component {
+          render() {
+              return <div>Description: {this.props.text}</div>;
+          }
+      }
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Component tree
+
+* React uses your render methods to construct a tree of elements:
+
+<img src="component-tree.svg" style="background-color: white" />
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Shadow DOM
+
+<img src="shadow-dom.svg" style="background-color: white" />
+
+* The shadow DOM is re-created all the time, but real DOM only modified when needed
+
+</script></section>
 
 
 
