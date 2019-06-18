@@ -625,14 +625,6 @@ ReferenceError: a is not defined
 
 
 
-<section data-markdown class=""><script type="text/template">
-
-## React only updates what's necessary
-
-<img src="granular-dom-updates.gif" style="background-color: white" />
-
-</script></section>
-
 
 
 
@@ -653,6 +645,22 @@ ReferenceError: a is not defined
 * Components must have a `render` method. This should return "HTML" that determines how your component is displayed
 
 </script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Using components
+
+* You can then use your component later on like it was a regular HTML tag:
+
+      <MyWidget></MyWidget>
+
+* This is the core idea of react
+  * Browser components always start with lower-case letters, and user components always upper-case
+
+</script></section>
+
 
 
 
@@ -816,6 +824,19 @@ Any javascript code can go inside the `{}`s:
 
 
 
+
+<section data-markdown class=""><script type="text/template">
+
+## React only updates what's necessary
+
+<img src="granular-dom-updates.gif" style="background-color: white" />
+
+</script></section>
+
+
+
+
+
 <section data-markdown class="smallCode"><script type="text/template">
 
 ## Inline styles
@@ -824,7 +845,8 @@ Any javascript code can go inside the `{}`s:
 
       <div style={{ backgroundColor: 'red', height: 25, }} />
 
-* Note the double brackets: `{{` (why?)
+* Note the double brackets: `{{...}}`
+  * Why?
 * Style names are camelCase, not kebab-case
 * You can use numbers for pixel sizes
   * 25 converted into "25px"
@@ -874,6 +896,20 @@ Any javascript code can go inside the `{}`s:
 * State is internal data stored in the component
 * `setState` modifies the state and (eventually) causes re-render
   * Note use of arrow function
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode" style="font-size: 90%"><script type="text/template">
+
+## Reconcilliation
+
+* Remember how React only updates what's necessary?
+* Partially for efficiency (DOM updates are slow)
+* But also, very important so that state is preserved
+  * Even if a component is re-rendered, state is preserved
 
 </script></section>
 
