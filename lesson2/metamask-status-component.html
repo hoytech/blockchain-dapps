@@ -1,0 +1,35 @@
+<style>
+body { font-size: 20px; }
+div { margin-top: 20px; }
+
+ul > li {
+  margin-top: 10px;
+}
+</style>
+
+<h1>Lab 2: Metamask Status Component</h1>
+
+<div>Create a react component that displays information about the user's metamask state. Your submission should be a single javascript file, ie <code>App.js</code> if you are using create-react-app. <b>Do not submit .zip files</b> or anything else, or you will receive 0 (but you can re-submit).</div>
+
+<div>The point of this lab is to get familiar with basic react development, learn about hooks, and to get comfortable using the web3 interface.</div>
+
+<ul>
+  <li>Create a new react project using <a href="https://reactjs.org/docs/create-a-new-react-app.html">create-react-app</a> (detailed instructions in the slides)</li>
+  <li>Download the file <a href="UseWeb3.js">UseWeb3.js</a> and put it into the src directory in your app.</li>
+  <li>
+    Implement a component that displays the user's web3 status, and allows them to unlock/connect metamask to your dApp. At a minimum, your component should:
+    <ul>
+      <li>If a user doesn't have metamask installed, show a message why (status is "NO_WEB3")</li>
+      <li>If a user has metamask locked, or your dApp isn't approved, show a message why (status is "LOCKED" or "NOT_ENABLED")</li>
+      <li>If the status is "LOCKED" or "NOT_ENABLED", you should show a button. If this button is clicked, call the enable() function (it's part of what useWeb3 returns)</li>
+      <li>If a user's metamask is unlocked and approved (status "READY"), you should show the user's address and what network they are on.</li>
+      <li>If a user changes their address or network, your UI should update accordingly.</li>
+    </ul>
+  </li>
+  <li>
+    BONUS:
+    <ul>
+      <li>Alongside a user's address, also show an ethereum <a href="https://github.com/ethereum/blockies">Blockie</a> "identicon" image</li>
+    </ul>
+  </li>
+</ul>
