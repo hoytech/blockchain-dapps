@@ -130,7 +130,7 @@
 
 ## Lesson Topics
 
-* The browser
+* Web applications
 * React fundamentals
 * Hooks, web3
 
@@ -160,6 +160,7 @@
   * Javascript for extra functionality
 * Browsers only understand this trio: HTML+CSS+JS
   * All other languages need to be "transpiled" to them
+    * Portmanteau: "translate" + "compile"
 
 </script></section>
 
@@ -175,6 +176,7 @@
 * Two main layout categories: block and inline
   * Canonical block element: `div`
   * Canonical inline element: `span`
+* `inline-block` is a hybrid, not used often
 
 </script></section>
 
@@ -270,9 +272,9 @@ Non-semantic:
 </div>
 
 <div class="right"><p data-markdown>
-* How does JS modify a page?
-* Standard interface called DOM
-* An HTML page is represented as a tree of tags, which can be added, modified, removed
+* How does Javascript modify a page?
+* Standard interface called "DOM"
+* An HTML page is represented as a tree of tags. Tags can be added, modified, removed
 </p></div>
 
 </section>
@@ -284,7 +286,7 @@ Non-semantic:
 
 ## jQuery
 
-jQuery was a very popular way to modify the DOM:
+jQuery is/was a very popular way to modify the DOM:
 
 ```html
 <div>
@@ -298,8 +300,8 @@ JS using jQuery:
 $("#name").html("Jane Doe");
 ```
 
-* Note `$` is a regular variable name in Javascript (so that perl/PHP coders could use `$name` and so on)
-* `"#name"` is a **CSS selector**
+* `$` is a valid JS function/variable name (so that perl/PHP coders can use `$name` etc)
+* `#name` is a **CSS selector**
   * Mini-language for specifying portions of DOM
 
 </script></section>
@@ -316,8 +318,8 @@ $("#name").html("Jane Doe");
 | `#name` | The element with id "name" (ids should be unique) |
 | `.name` | All elements with class "name" |
 | `div, .name` | All divs AND all elements with class "name" |
-| <code>div#i&nbsp;span.c</code> | All `span`s with class `c` inside the `div` with id `i` (even nested) |
-| .c > span | All `span`s that are direct children of any element with class `c` |
+| <code>div#i&nbsp;span.c</code> | All `span`s with class `c` inside the `div` with id `i` (even nested ones) |
+| .c > span | All `span`s that are direct children of any element with class `c` (no nesting) |
 
 </script></section>
 
@@ -350,7 +352,7 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 ```html
 <style>
 .abc {
-    background-color: white;
+    background-color: green;
 }
 </style>
 
@@ -373,6 +375,30 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 
 </script></section>
 
+
+
+<section data-markdown><script type="text/template">
+
+## CSS colo<span style="text-decoration: line-through double red">u</span>rs
+
+* RGB:
+  * `#f00`=<span style="background-color: #f00; padding-left: 100px"></span>
+    `#0f0`=<span style="background-color: #0f0; padding-left: 100px"></span>
+    `#00f`=<span style="background-color: #00f; padding-left: 100px"></span>
+  * `#fff`=<span style="background-color: #fff; padding-left: 100px"></span>
+    `#000`=<span style="background-color: #000; padding-left: 100px; border: 1px dashed white"></span>
+    `#ddd`=<span style="background-color: #555; padding-left: 100px"></span>
+* RRGGBB (for more precision):
+  * `#003100`=<span style="background-color: #003100; padding-left: 100px"></span>
+    `#009000`=<span style="background-color: #009000; padding-left: 100px"></span>
+    `#00ba00`=<span style="background-color: #00ba00; padding-left: 100px"></span>
+    `#00ff00`=<span style="background-color: #00ff00; padding-left: 100px"></span>
+* Named ([full list](https://www.w3schools.com/colors/colors_names.asp))
+  * `yellow`=<span style="background-color: yellow; padding-left: 100px"></span>
+    `RebeccaPurple`=<span style="background-color: RebeccaPurple; padding-left: 100px"></span>
+    `CornflowerBlue`=<span style="background-color: CornflowerBlue ; padding-left: 100px"></span>
+
+</script></section>
 
 
 
@@ -414,7 +440,7 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 }
 ```
 
-Compiles to:
+"Transpiles" to:
 
 ```css
 #main .widget >div { padding 5px; }
@@ -422,7 +448,7 @@ Compiles to:
 ```
 
 * Note that "`#main .widget`" is not duplicated
-  * DRY principle
+  * [DRY principle](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)
 
 </script></section>
 
@@ -445,7 +471,7 @@ $brand-color: #af32f1;
 }
 ```
 
-* Makes it easy to update things since you only have to change one place
+* Makes it easy to update things since you only have to change one place (DRY)
 
 </script></section>
 
@@ -471,7 +497,7 @@ function handleClickEvent() {
 }
 ```
 
-* Event handling is subtly different between browsers, but with react you don't need to care
+* Event handling is a little different between browsers, but with react you don't need to care
 
 </script></section>
 
@@ -494,6 +520,7 @@ function handleClickEvent() {
 * If you have a large number of elements, it may be inefficient to put handler on each one
 * [Event delegation](https://javascript.info/event-delegation) relies on event propagation rules:
   * Instead of many event handlers, put a single event listener higher in the tree
+  * Also makes changing handlers easier and more efficient
 
 </script></section>
 
@@ -620,10 +647,10 @@ ReferenceError: a is not defined
 ## Maintaining DOM state is hard
 
 * In jQuery, you may have different views of your data in multiple places in the DOM
-  * Example: Notification badge count, and list of notifications
+  * Example: List of notifications, and notification badge count
 * Every change to data you need to update all places in DOM
   * Difficult to remember what is in DOM already, and what needs to change
-  * Common source of bugs
+  * Lots of work to figure out how to change it: common source of bugs
 
 </script></section>
 
@@ -676,7 +703,10 @@ ReferenceError: a is not defined
 
       <MyWidget></MyWidget>
 
-* This is the core idea of react
+  Same thing:
+
+      <MyWidget />
+
   * Browser components always start with lower-case letters, and user components always upper-case
 
 </script></section>
@@ -721,10 +751,6 @@ ReferenceError: a is not defined
 
       <MyWidget name="John"></MyWidget>
 
-* Or, same thing:
-
-      <MyWidget name="John" />
-
 </script></section>
 
 
@@ -750,17 +776,28 @@ Any javascript code can go inside the `{}`s:
 
 <section data-markdown class="smallCode"><script type="text/template">
 
+## JSX and interpolation
+
+* Note the similarity between ES6 interpolation:
+      `<div>Hello ${name}, the time is ${new Date()}</div>`
+* and JSX:
+      <div>Hello {name}, the time is {new Date()}</div>
+* But there is a difference, with security implications...
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
 ## XSS-protection
 
-* Cross-site scripting attack protection
+* React protects against [cross-site scripting attacks](https://en.wikipedia.org/wiki/Cross-site_scripting)
 * This will just show as an ugly looking name, and will not execute the alert:
 
-      class MyWidget extends Component {
+      render() {
           let name = `<img src=a onerror="alert('hacked!')" />`;
-
-          render() {
-              return <div>Hello, {name}!</div>;
-          }
+          return <div>Hello, {name}!</div>;
       }
 
 * React does have [dangerouslySetInnerHTML](https://reactjs.org/docs/dom-elements.html#dangerouslysetinnerhtml), but be careful!
@@ -914,8 +951,8 @@ Any javascript code can go inside the `{}`s:
       }
 
 * State is internal data stored in the component
-* `setState` modifies the state and (eventually) causes re-render
-  * Note use of arrow function
+* `setState` modifies the state and (eventually) causes a re-render
+  * Note use of arrow function for `this`
 
 </script></section>
 
@@ -956,7 +993,7 @@ Any javascript code can go inside the `{}`s:
         }
       }
 
-* `onClick` not `onclick` (events are camelCase)
+* `onClick` not `onclick` (React events are camelCase, unlike in browser)
 
 </script></section>
 
@@ -1017,7 +1054,7 @@ Start dev server:
     cd my-app
     npm start
 
-Edit the file `my-app/src/App.js`, and see changes in your browser
+Edit the file `my-app/src/App.js`, and see changes "hot reload" in your browser
 
 </script></section>
 
@@ -1120,10 +1157,10 @@ Edit the file `my-app/src/App.js`, and see changes in your browser
 ## Managing dApp state
 
 * Handling changes to metamask's state requires thinking about several transitions:
-  * When a user unlocks or unlocks metamask
-  * When a user approves your metamask
-  * When a user changes their account
-  * When a user changes their network
+  * User locks or unlocks metamask
+  * User [approves your dApp](https://medium.com/metamask/introducing-privacy-mode-42549d4870fa)
+  * User changes their account
+  * User changes their network
 * With React, **we don't code transitions**
   * Just what you want the component to look like given current data
 
