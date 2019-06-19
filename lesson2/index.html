@@ -140,9 +140,10 @@
 
 <section data-markdown><script type="text/template">
 
-## Where we came from
-
 <img src="mosaic.gif" style="background-color: white" />
+
+* The history of web applications:
+  * Evolution, not revolution
 
 </script></section>
 
@@ -159,7 +160,7 @@
   * CSS for styles and layout
   * Javascript for extra functionality
 * Browsers only understand this trio: HTML+CSS+JS
-  * All other languages need to be "transpiled" to them
+  * Other languages need to be "transpiled"
     * Portmanteau: "translate" + "compile"
 
 </script></section>
@@ -385,14 +386,14 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 
 ## CSS colo<span style="text-decoration: line-through double red">u</span>rs
 
-* RGB:
+* #RGB:
   * `#f00`=<span style="background-color: #f00; padding-left: 100px"></span>
     `#0f0`=<span style="background-color: #0f0; padding-left: 100px"></span>
     `#00f`=<span style="background-color: #00f; padding-left: 100px"></span>
   * `#fff`=<span style="background-color: #fff; padding-left: 100px"></span>
     `#000`=<span style="background-color: #000; padding-left: 100px; border: 1px dashed white"></span>
     `#ddd`=<span style="background-color: #555; padding-left: 100px"></span>
-* RRGGBB (for more precision):
+* #RRGGBB (for more precision):
   * `#003100`=<span style="background-color: #003100; padding-left: 100px"></span>
     `#009000`=<span style="background-color: #009000; padding-left: 100px"></span>
     `#00ba00`=<span style="background-color: #00ba00; padding-left: 100px"></span>
@@ -424,7 +425,7 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 
 * [SASS](https://sass-lang.com/) is enhanced CSS
 * Doesn't directly work in browsers, so requires a special "transpiler" to convert it to normal CSS
-  * Usually setup for you automatically with webpack
+  * Usually handled by webpack
 
 </script></section>
 
@@ -521,7 +522,7 @@ function handleClickEvent() {
 
 ## Event delegation
 
-* If you have a large number of elements, it may be inefficient to put handler on each one
+* If you have a large number of elements, it may be inefficient to put handlers on each one
 * [Event delegation](https://javascript.info/event-delegation) relies on event propagation rules:
   * Instead of many event handlers, put a single event listener higher in the tree
   * Also makes changing handlers easier and more efficient
@@ -557,7 +558,7 @@ can be written like:
 
     (a, b) => a + b
 
-* This saves typing, and also [does not rebind `this`](https://hackernoon.com/javascript-es6-arrow-functions-and-lexical-this-f2a3e2a5e8c4) (very useful for event handlers)
+* This saves typing, and also [does not rebind `this`](https://hackernoon.com/javascript-es6-arrow-functions-and-lexical-this-f2a3e2a5e8c4) (very useful for event handlers, as we'll see)
 
 </script></section>
 
@@ -566,7 +567,7 @@ can be written like:
 
 ## ES6 feature: interpolation
 
-In ES6, instead of concatenating things together like this:
+In ES6, instead of concatenating things together:
 
 ```javascript
 "hello, " + name + ", the time is: " + currentTime
@@ -589,9 +590,9 @@ Any JS can live inside the `${}`s:
 
 <section data-markdown><script type="text/template">
 
-## ES6 feature: lexical binding
+## ES6 feature: lexical scoping
 
-The old javascript `var` keyword has confusing "function hoisting" behaviour:
+`var` has confusing [function hoisting](http://adripofjavascript.com/blog/drips/variable-and-function-hoisting.html) behaviour:
 
 ```javascript
 > function f1() { console.log(a); var a; }
@@ -617,7 +618,7 @@ ReferenceError: a is not defined
 
 ## ES6 feature: class
 
-* Javascript uses prototype-based objects which is confusing for people who haven't used them before
+* Javascript uses prototype-based objects which can be confusing
 * ES6 lets you pretend Javascript uses class-based objects:
     ```javascript
     class MyObj {
