@@ -226,6 +226,22 @@ Non-semantic:
 
 
 
+
+
+<section data-markdown><script type="text/template">
+
+## Path traversal attacks
+
+* The "`..`" directory is the parent directory on linux/windows/etc
+* Some web-servers and/or applications don't properly sanitize this
+* For example, you may be able to download a server's password file:
+      http://server.com/some-app/../../../../etc/passwd
+  * Security is one reason to do less work on the server
+
+</script></section>
+
+
+
 <section data-markdown><script type="text/template">
 
 ## Single-page applications
@@ -997,7 +1013,7 @@ Start dev server:
     cd my-app
     npm start
 
-Edit the file `my-app/src/App.js`, and see changes in browser
+Edit the file `my-app/src/App.js`, and see changes in your browser
 
 </script></section>
 
@@ -1011,6 +1027,134 @@ Edit the file `my-app/src/App.js`, and see changes in browser
 
 
 
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Function components
+
+* Instead of using `class` to create components, you can simply use JS functions:
+
+      function MyWidget(props) {
+          return <div>Hello, {props.name}!</div>;
+      }
+
+* These work the same as `class` components, except in classic React they cannot use state
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Hooks
+
+* [Hooks](https://reactjs.org/docs/hooks-intro.html) are a new feature in react
+* They simplify some common patterns and make doing the right thing easier
+* All hooks begin with "`use`", ie `useState`, `useEffect`, etc.
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## useState
+
+* The `useState` hook is similar to state in normal components, and can be used in function components:
+      function MyCounter() {
+          let [count, setCount] = useState(0);
+
+          return <div>
+              <p>You clicked {count} times</p>
+              <button onClick={() => setCount(count + 1)}>
+                  Click me
+              </button>
+          </div>;
+      }
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## useEffect
+
+* `useEffect` is a way to start and stop some external "side effect" actions
+      useEffect(() => {
+          // Initiate effect
+
+          return () => {
+              // Clean-up effect
+          };
+      });
+* Passed a function that starts the effect, returns another function that stops the effect
+* Construction and creation always together
+
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## window.web3
+
+* Ethereum dApp browsers add a special variable accesible via javascript: `window.web3`
+* Your dApp can use it to learn things like:
+  * The user's ethereum address
+  * Selected ethereum network (mainnet, ropsten, etc)
+  * If metamask is locked
+  * If user has approved your dApp
+
+</script></section>
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## Managing dApp state
+
+* Handling changes to metamask's state requires thinking about several transitions:
+  * When a user unlocks or unlocks metamask
+  * When a user approves your metamask
+  * When a user changes their account
+  * When a user changes their network
+* React hooks to the rescue!
+
+</script></section>
+
+
+
+
+<section data-markdown class="smallCode"><script type="text/template">
+
+## useWeb3
+
+* `useWeb3` is a hook that simplifies getting info from `window.web3`:
+      function Web3Info(props) {
+          let w3 = useWeb3();
+
+          if (w3.status == 'READY') {
+              return <div>
+                  Your address: {w3.account.address}
+              </div>;
+          } else {
+              return <div>web3 not ready: {w3.status}</div>;
+          }
+      }
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Lab: Metamask Status Component
+
+[metamask-status-component.html](metamask-status-component.html)
+
+</script></section>
 
 
 
