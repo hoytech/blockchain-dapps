@@ -1,6 +1,6 @@
 <style>
 body { font-size: 20px; }
-div { margin-top: 20px; }
+div { margin-top: 10px; }
 
 ul > li {
   margin-top: 10px;
@@ -8,43 +8,61 @@ ul > li {
 
 #main div {
   border: 1px solid black;
-  padding: 5px;
+  padding: 7px;
 }
 
 #main span {
   border: 1px solid black;
 }
 
+#layout {
+  display: flex;
+  justify-content: space-around;
+}
+
+#layout > #work-area {
+  flex-grow: 1;
+  max-width: 40%;
+}
+
+#layout > #instructions {
+}
+
 </style>
 
 <h1>Exercise: CSS Selectors</h1>
 
+<div id="layout">
+
+
+<div id="work-area">
+
 <h2>The document:</h2>
 
 <div id="main">
-  <div class="a">div class a</div>
-  <div class="b">div class b</div>
-  <div class="a b">div class a and b</div>
-  <div class="a">div class a
-    <div class="b">div class b</div>
+  <div class="a">div class="a"</div>
+  <div class="b">div class="b"</div>
+  <div class="a b">div class="a b"</div>
+  <div class="a">div class="a"
+    <div class="b">div class="b"</div>
   </div>
-  <div class="a" id="i">div class a, id i</div>
-  <div class="a">div class a
-    <div class="b">div class b
-      <div class="c">div class c
-        <div class="b">div class b (NESTED!)</div>
-        <span>span</span> <span>span</span> <span>span</span> <span>span</span>
+  <div class="a" id="i">div id="i" class="a"</div>
+  <div class="a">div class="a"
+    <div class="b">div class="b"
+      <div class="c">div class="c"
+        <div class="b" style="margin-bottom: 10px">div class="b" (NESTED!)</div>
       </div>
     </div>
   </div>
-  <div class="a">class a</div>
+  <div id="i2">div id="i2"
+    <span>span</span> <span>span</span> <span>span</span> <span>span</span>
+  </div>
 </div>
 
-<div>
-  <input id="sel" placeholder="css selector" />
-  <button onclick="go()">GO!</button>
 </div>
 
+
+<div class="instructions">
 
 <h2>Your tasks: Select the following:</h2>
 
@@ -53,12 +71,28 @@ ul > li {
   <li>All span elements</li>
   <li>The div with id "i" AND all span elements</li>
   <li>All "class a" divs</li>
-  <li>"class b" divs inside class "a" divs</li>
-  <li>Only "class b" divs that are direct children of a "class a" (not nested)</li>
+  <li>All "class b" divs inside a class "a" div</li>
+  <li>Only "class b" divs that are direct children of a class "a" div (not nested)</li>
+  <li>The 3rd span element inside the div with id "i2"</li>
 </ul>
+
+<div>
+  <input id="sel" placeholder="css selector" />
+  <button onclick="go()">GO!</button>
+</div>
+
+</div>
+
+
+
+
+
+</div>
 
 <script>
 function go() {
+  document.getElementById('sel').focus();
+
   let allNodes = document.querySelectorAll("#main, #main div, #main span");
 
   allNodes.forEach(n => {

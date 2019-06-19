@@ -201,6 +201,8 @@ Non-semantic:
     <div class="aside">Oh BTW, some other stuff</div>
     <div class="footer">(C) 2019</div>
 
+* Which to use is mostly a personal preference
+
 </script></section>
 
 </script></section>
@@ -238,7 +240,7 @@ Non-semantic:
 * Some web-servers and/or applications don't properly sanitize this
 * For example, you may be able to download a server's password file:
       http://server.com/some-app/../../../../etc/passwd
-  * Security is one reason to do less work on the server
+  * Security is one potential reason to do less work on the server
 
 </script></section>
 
@@ -286,7 +288,7 @@ Non-semantic:
 
 ## jQuery
 
-jQuery is/was a very popular way to modify the DOM:
+[jQuery](https://jquery.com/) is/was a very popular way to modify the DOM:
 
 ```html
 <div>
@@ -320,6 +322,8 @@ $("#name").html("Jane Doe");
 | `div, .name` | All divs AND all elements with class "name" |
 | <code>div#i&nbsp;span.c</code> | All `span`s with class `c` inside the `div` with id `i` (even nested ones) |
 | .c > span | All `span`s that are direct children of any element with class `c` (no nesting) |
+| #n > :first-child | The first child element of #n |
+| #n > :nth-child(2) | The 2nd child element of #n |
 
 </script></section>
 
