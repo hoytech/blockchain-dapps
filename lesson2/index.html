@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 
-    <title>Modern web development</title>
+    <title>Web development with React</title>
 
     <meta name="author" content="Doug Hoyte">
 
@@ -116,7 +116,7 @@
 
 ## Decentralized Applications
 
-### Lesson 2: Modern web development
+### Lesson 2: Web development with React
 
 *Doug Hoyte, June 2019*
 
@@ -131,7 +131,7 @@
 ## Lesson Topics
 
 * The browser
-* React basics
+* React fundamentals
 * Hooks, web3
 
 </script></section>
@@ -155,7 +155,7 @@
 ## HTML
 
 * HTML is "marked-up" text that is sent by web servers to web browsers
-* Usually also includes:
+* Usually also sent:
   * CSS for styles and layout
   * Javascript for extra functionality
 * Browsers only understand this trio: HTML+CSS+JS
@@ -220,7 +220,7 @@ Non-semantic:
 
 * Traditional web apps: new HTML pages delivered to client on every navigation action
 * Disadvantage: Sites feel "slow" since actions need to be sent over internet
-* Coming back into style for certain cases
+* Coming back into style for certain use-cases
 
 </script></section>
 
@@ -270,7 +270,7 @@ Non-semantic:
 </div>
 
 <div class="right"><p data-markdown>
-* How do you modify a page?
+* How does JS modify a page?
 * Standard interface called DOM
 * An HTML page is represented as a tree of tags, which can be added, modified, removed
 </p></div>
@@ -369,7 +369,7 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 * Inline styles can easily be changed or added by JS
   * React uses inline styles a lot
 * Stylesheets can be more efficient in some cases
-  * Less duplicated text, CSS engines perform better
+  * Less duplicated text, CSS engines perform better with them
 
 </script></section>
 
@@ -392,8 +392,8 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 
 ## SASS
 
-* SASS is enhanced CSS
-* Doesn't work in browsers, so requires a special "transpiler" to convert it to normal CSS
+* [SASS](https://sass-lang.com/) is enhanced CSS
+* Doesn't directly work in browsers, so requires a special "transpiler" to convert it to normal CSS
   * Usually setup for you automatically with webpack
 
 </script></section>
@@ -439,6 +439,10 @@ $brand-color: #af32f1;
 .help-text {
     color: $brand-color;
 }
+
+.bullet-points {
+    color: $brand-color;
+}
 ```
 
 * Makes it easy to update things since you only have to change one place
@@ -453,7 +457,7 @@ $brand-color: #af32f1;
 
 ## Events
 
-In your HTML you can designate some javascript to run when some event is triggered:
+In your HTML you can designate some javascript to run when an event is triggered:
 
 ```html
 <button onclick="handleClickEvent()">Click me!</button>
@@ -543,7 +547,7 @@ You can use back-quotes:
 `hello, ${name}, the time is ${currentTime}`
 ```
 
-Any JS can live inside the `{}`s:
+Any JS can live inside the `${}`s:
 
 ```javascript
 `hello, ${name}, the time is ${new Date()}`
@@ -582,7 +586,7 @@ ReferenceError: a is not defined
 
 ## ES6 feature: class
 
-* Javascript uses prototype-based object which is confusing for people who haven't used it before
+* Javascript uses prototype-based objects which is confusing for people who haven't used them before
 * ES6 lets you pretend Javascript uses class-based objects:
     ```javascript
     class MyObj {
@@ -717,7 +721,7 @@ ReferenceError: a is not defined
 
       <MyWidget name="John"></MyWidget>
 
-* Or, same:
+* Or, same thing:
 
       <MyWidget name="John" />
 
@@ -748,7 +752,7 @@ Any javascript code can go inside the `{}`s:
 
 ## XSS-protection
 
-* Cross-site scripting attacks protection
+* Cross-site scripting attack protection
 * This will just show as an ugly looking name, and will not execute the alert:
 
       class MyWidget extends Component {
@@ -843,7 +847,7 @@ Any javascript code can go inside the `{}`s:
 
 <section data-markdown class=""><script type="text/template">
 
-## React only updates what's necessary
+## Only updates what's necessary
 
 <img src="granular-dom-updates.gif" style="background-color: white" />
 
@@ -1103,7 +1107,7 @@ Edit the file `my-app/src/App.js`, and see changes in your browser
 * Ethereum dApp browsers add a special variable accesible via javascript: `window.web3`
 * Your dApp can use it to learn things like:
   * The user's ethereum address
-  * Selected ethereum network (mainnet, ropsten, etc)
+  * Currently selected ethereum network (mainnet, ropsten, etc)
   * If metamask is locked
   * If user has approved your dApp
 
@@ -1120,7 +1124,8 @@ Edit the file `my-app/src/App.js`, and see changes in your browser
   * When a user approves your metamask
   * When a user changes their account
   * When a user changes their network
-* React hooks to the rescue!
+* With React, **we don't code transitions**
+  * Just what you want the component to look like given current data
 
 </script></section>
 
