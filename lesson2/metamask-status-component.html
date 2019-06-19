@@ -16,6 +16,20 @@ ul > li {
 <ul>
   <li>Create a new react project using <a href="https://reactjs.org/docs/create-a-new-react-app.html">create-react-app</a> (detailed instructions in the slides)</li>
   <li>Download the file <a href="UseWeb3.js">UseWeb3.js</a> and put it into the src directory in your app.</li>
+  <li>Use the following as a starting point for your App.js:
+
+<pre>
+import React from 'react';
+import { useWeb3 } from './UseWeb3';
+ 
+function App() {
+    let w3 = useWeb3();
+    return &lt;div&gt;status = {w3.status}&lt;/div&gt;;
+}
+
+export default App;
+</pre>
+</li>
   <li>
     Implement a component that displays the user's web3 status, and allows them to unlock/connect metamask to your dApp. At a minimum, your component should:
     <ul>
@@ -30,6 +44,7 @@ ul > li {
     BONUS:
     <ul>
       <li>Alongside a user's address, also show an ethereum <a href="https://github.com/ethereum/blockies">Blockie</a> "identicon" image</li>
+      <li>Use some CSS to make your component pretty looking</li>
     </ul>
   </li>
 </ul>
