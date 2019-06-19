@@ -174,10 +174,11 @@
 
 <img src="inline-block.png" style="background-color: white" />
 
-* Two main layout categories: block and inline
+* Two main categories: block and inline
   * Canonical block element: `div`
   * Canonical inline element: `span`
 * `inline-block` is a hybrid, not used often
+* Suggestion: learn about [flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 
 </script></section>
 
@@ -225,7 +226,7 @@ Non-semantic:
 
 * Traditional web apps: new HTML pages delivered to client on every navigation action
 * Disadvantage: Sites feel "slow" since actions need to be sent over internet
-* Coming back into style for certain use-cases
+* Still best approach for many use-cases
 
 </script></section>
 
@@ -293,7 +294,7 @@ Non-semantic:
 
 ```html
 <div>
-  Hello, <span id="name" />!
+  Hello, <span id="name"></span>!
 </div>
 ```
 
@@ -382,6 +383,21 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
 
 
 
+
+<section data-markdown><script type="text/template">
+
+## Dynamic stylesheets
+
+* Stylesheets can also be added/edited with JS using [JSS](https://github.com/cssinjs/jss) or [directly](https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript)
+* If you want to make a style change that affects many elements, JSS is much more efficient, since no DOM modifications required
+  * Purely uses CSS engine
+
+</script></section>
+
+
+
+
+
 <section data-markdown><script type="text/template">
 
 ## CSS colo<span style="text-decoration: line-through double red">u</span>rs
@@ -402,18 +418,6 @@ Or, as a separate style tag, either embeded in the HTML or in a separate `.css` 
   * `yellow`=<span style="background-color: yellow; padding-left: 100px"></span>
     `RebeccaPurple`=<span style="background-color: RebeccaPurple; padding-left: 100px"></span>
     `CornflowerBlue`=<span style="background-color: CornflowerBlue ; padding-left: 100px"></span>
-
-</script></section>
-
-
-
-<section data-markdown><script type="text/template">
-
-## Dynamic stylesheets
-
-* Stylesheets can also be added/edited with JS using [JSS](https://github.com/cssinjs/jss) or [directly](https://www.w3.org/wiki/Dynamic_style_-_manipulating_CSS_with_JavaScript)
-* If you want to make a style change that affects many elements, JSS is much more efficient, since no DOM modifications required
-  * Purely uses CSS engine
 
 </script></section>
 
