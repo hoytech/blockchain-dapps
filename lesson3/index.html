@@ -1,0 +1,575 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Web development with React</title>
+
+    <meta name="author" content="Doug Hoyte">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+    <link rel="stylesheet" href="../reveal.js/css/reveal.css">
+    <link rel="stylesheet" href="../reveal.js/css/theme/black.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '../reveal.js/css/print/pdf.css' : '../reveal.js/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+    <script src="../reveal.js/lib/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <style>
+      .reveal .slides h1, .reveal .slides h2, .reveal .slides h3 {
+        text-transform: none;
+      }
+
+      .two-column {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .two-column em {
+        margin: 20px;
+      }
+
+      .reveal .big-and-bold {
+        font-weight: bold;
+        font-size: 135%;
+      }
+
+      .reveal .shrunk-a-bit {
+        font-size: 90%;
+      }
+
+      .reveal .shrunk-a-bit pre {
+        width: 100%;
+      }
+
+      .reveal pre {
+        width: 100%;
+      }
+
+      .reveal .highlight {
+        color: yellow;
+        font-weight: bold;
+      }
+
+      .reveal .highlightRed {
+        color: red;
+        font-weight: bold;
+      }
+
+      .reveal .highlightGreen {
+        color: green;
+        font-weight: bold;
+      }
+
+      .left {
+        left:-8.33%;
+        text-align: left;
+        float: left;
+        width:50%;
+        z-index:-10;
+      }
+
+      .right {
+        left:31.25%;
+        top: 75px;
+        text-align: left;
+        float: right;
+        z-index:-10;
+        width:50%;
+      }
+
+      .smallCode pre code {
+        font-size: 80%;
+      }
+
+      .smallText {
+        font-size: 80%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+<!------------------------------------------------------->
+
+
+
+<section data-markdown><script type="text/template">
+
+## Decentralized Applications
+
+### Lesson 3: FIXME
+
+*Doug Hoyte, June 2019*
+
+[https://is.gd/blockchaindapps](https://is.gd/blockchaindapps)
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Lesson Topics
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Set-Cookie header
+
+<img src="cookies.png" width="600px" />
+
+* Server sends `Set-Cookie` header on a response
+* Client sends this cookie with all future requests to this server
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Server-side storage
+
+<img src="web-dbs1.svg" style="background-color: white" />
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Client-side storage
+
+<img src="web-dbs2.svg" style="background-color: white" />
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Cookies pros/cons
+
+* Pro: supported by all browsers
+* Pro: can be isolated from javascript
+* Con: Only small values (4096 byte limit)
+* Con: Sent to server on every HTTP request (per domain)
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Cookie security
+
+* `Secure` - This cookie is only sent over `https://` requests, not `http://`
+  * Cookies can't be intercepted at network level
+* `HttpOnly` - This cookie cannot be accessed by javascript
+  * XSS attacks can't download session tokens
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Same origin policy
+
+* Very important web security mechanism
+* Websites can only read data that they wrote, not data of other sites:
+  * `funny-cat-pictures.com` can't read cookies set by `bank-of-america.com`
+* "website" = URL scheme (http/https), domain, port
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## ACID
+
+* Atomic
+* Consistent
+* Isolated
+* Durable
+
+</script></section>
+
+
+<style>
+pre.acid {
+  font-size: 115%;
+}
+</style>
+
+
+<section data-markdown><script type="text/template">
+
+## Bank transfer
+
+* Suppose we want to transfer $100 from A to B
+* This requires 2 DB operations:
+
+<pre class="acid">
+  <span>A -= $100</span>
+  <span>B += $100</span>
+</pre>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+## Atomic
+
+* What if computer crashes between operations?
+* Does the $100 just disappear?
+
+<pre class="acid">  
+  <span>A -= $100</span>
+  <span style="color:red">**COMPUTER CRASH**</span>
+  <span>B += $100</span>
+</pre>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+## Consistent
+
+* Suppose our DB has a constraint where it verifies total balances
+* What if there is a bug that creates money out of nowhere?
+
+<pre class="acid">
+  <span>A -= $100</span>
+  <span>B += $<span style="color:red">101</span></span>
+</pre>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+## Isolated
+
+* If somebody else (say a reporting script) sees partial results of your operations
+* This would report $100 being missing:
+
+<pre class="acid">
+<span>A -= $100</span>
+            <span>print "Total = ", (A + B)</span>
+<span>B += $100</span>
+</pre>
+
+</script></section>
+
+<section data-markdown><script type="text/template">
+
+## Durable
+
+* After performing your operations, there should be a guarantee that they won't be forgotten:
+
+<pre class="acid">
+<span>A -= $100</span>
+<span>B += $100</span>
+print "OK, transfer complete!"
+<span style="color:red">**COMPUTER CRASH**</span>
+</pre>
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Solution: Transactions
+
+* Many databases require you to wrap your operations in **transactions**
+* Before doing your operations you **begin** a transaction
+* When done your operations, you **commit** your transaction
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## Transactions: ACID
+
+* **Atomic**: Either all your operations will go through, or none of them will
+* **Consistent**: DB checks constraints as you go, or when you commit (deferred)
+* **Isolated**: Other transactions will not see your partial operations
+* **Durable**: After a successful commit, guaranteed to be written to disk
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Repeatable Reads
+
+* Even read-only groups of operations must be in transactions
+* Transactions see "snapshots" of the DB: does not change throughout the transaction
+
+<pre class="acid">
+<span>print A -> $500</span>
+                   <span style="color:red">A -= $100</span>
+<span>print A -> $500</span>
+</pre>
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Blockchain vs. DB transactions
+
+* Very similar: not a coincidence
+* Remember, a blockchain *is* a DB
+* Blockchain transactions guarantee ACID
+  * Atomic: Transaction can't be "half applied"
+  * Consistent: You can't steal money
+  * Isolated: Only one is executed at a time
+  * Durable: Permanently saved on chain (except for re-orgs)
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## localStorage
+
+* `localStorage.setItem(key, value)`
+  * Stores `value` into browser storage space as `key` entry
+  * Both `value` and `key` must be strings
+* `value = localStorage.getItem(key)`
+  * Retrieves the value of `key` entry
+* `localStorage.clear()`
+  * Deletes all keys from storage space
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Exercise: localStorage
+
+1. Open the browser console (control-shift-i)
+1. Set the key `"a"` to `"hello"`
+1. Reload the browser
+  * Retrieve the key `"a"` to verify it's still there
+1. Go to a different website
+  * Retrieve the key `"a"`
+    * Is it gone? Why not?
+1. Clear your localStorage
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Only strings?
+
+* Why can `localStorage` only store strings?
+* Suppose it could store anything:
+  * What if you stored something like a websocket connection
+  * Then rebooted your computer
+  * What would it mean to retrieve this old websocket connection?
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Serialization
+
+* Most network protocols, key-value DBs, etc, require you to convert your complex data-structures into strings
+* This is called serialization
+  * Synonyms: encoding, marhsalling, pickling
+* Most common serialization format in browsers:
+  * JavaScript Object Notation (JSON)
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## JSON in browser
+
+* Originally, JSON was decoded like this:
+
+      eval("(" + json + ")")
+
+* But what if a hacker can pass this "JSON" to you:
+
+      function(){alert('XSS hack')}()
+
+* Never use `eval`
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Java struts bug
+
+* The Java Struts library had a [deserialization bug](https://www.cvedetails.com/cve/CVE-2017-5638/)
+  * Basically the same as `eval` issue, but server-side with xml and java
+* Cause of famous equifax data breach
+* Wasn't the first, won't be the last
+* Never trust input from users!
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## JSON in browser, improved
+
+* Modern browsers have safe, built-in JSON routines
+* Encode JSON:
+
+      let json = JSON.stringify(obj);
+
+* Decode JSON:
+
+      let obj = JSON.parse(json);
+
+</script></section>
+
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## JSON problem: redundancy
+
+      [
+          { "firstName": "Alice" },
+          { "firstName": "Bob" },
+          { "firstName": "Carol" },
+          { "firstName": "Danny" }
+      ]
+
+* `"firstName"` repeated many times
+* This can be inefficient
+  * But compression helps a lot with this
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## JSON problem: all-or-nothing
+
+* Most JSON parsers require you parse the entire string to read anything
+
+<pre style="white-space: pre-wrap">
+{"firstName":"John","lastName":"Smith","isAlive":true,"age":27,"address":{"streetAddress":"21 2nd Street","city":"New York","state":"NY","postalCode":"10021-3100"},"phoneNumbers":[{"type":"home","number":<span class="highlight">"212 555-1234"</span>},{"type":"office","number":"646 555-4567"},{"type":"mobile","number":"123 456-7890"}],"children":[],"spouse":null}
+</pre>
+
+* What if all you want is one phone number?
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Alternative serializations
+
+* MessagePack, CBOR
+  * "binary" JSON
+  * Harder to read, but smaller and faster to encode/parse
+* Thrift, Protocol buffers
+  * Binary (solves redundancy)
+  * Can be parsed much faster than JSON, but still requires parsing whole value
+* Flat buffers, Cap'n proto
+  * Partial parsing
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## End of lesson
+
+</script></section>
+
+
+
+<!------------------------------------------------------->
+
+
+      </div>
+
+    </div>
+
+    <script src="../reveal.js/lib/js/head.min.js"></script>
+    <script src="../reveal.js/js/reveal.js"></script>
+
+    <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+
+        transition: 'none', // none/fade/slide/convex/concave/zoom
+
+	math: {
+          mathjax: '../lib/MathJax/MathJax.js',
+          config: 'TeX-AMS_SVG-full',
+	},
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: '../reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '../reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: '../reveal.js/plugin/math/math.js', async: true },
+        ]
+      });
+
+    </script>
+
+  </body>
+</html>
