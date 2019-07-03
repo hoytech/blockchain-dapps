@@ -116,7 +116,7 @@
 
 ## Decentralized Applications
 
-### Lesson 3: FIXME
+### Lesson 3: Browser storage
 
 *Doug Hoyte, June 2019*
 
@@ -130,8 +130,85 @@
 
 ## Lesson Topics
 
+* Browser storage options
+* Database fundamentals
+
 </script></section>
 
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Server-side storage
+
+<img src="web-dbs1.svg" style="background-color: white" />
+
+* Centralized: All data is stored on remote server
+* Users can easily share data
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Client-side storage
+
+<img src="web-dbs2.svg" style="background-color: white" />
+
+* Decentralized: Users store their own data, locally
+* Sharing data is more difficult
+
+</script></section>
+
+
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Same origin policy
+
+* Very important web security mechanism
+* Websites can only read data that they wrote, not data of other sites:
+  * `funny-cat-pictures.com` can't read cookies set by `bank-of-america.com`
+* website consists of:
+  * URL scheme (http/https)
+  * domain (bank-of-america.com)
+  * port (defaults to 80/443)
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Sandboxes
+
+<img src="sandbox.svg" style="background-color: white" />
+
+* As well as being isolated from each-other, websites cannot directly access computer resources
+* You can't open or save a file from a web-browser
+* Need to use other interfaces
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Cookies
+
+* The oldest type of browser storage
+* Managed at the HTTP-level (or, optionally, with javascript)
+* Usually for storing very small items like **session tokens**
+
+</script></section>
 
 
 <section data-markdown><script type="text/template">
@@ -149,41 +226,7 @@
 
 <section data-markdown><script type="text/template">
 
-## Server-side storage
-
-<img src="web-dbs1.svg" style="background-color: white" />
-
-</script></section>
-
-
-
-<section data-markdown><script type="text/template">
-
-## Client-side storage
-
-<img src="web-dbs2.svg" style="background-color: white" />
-
-</script></section>
-
-
-
-<section data-markdown><script type="text/template">
-
-## Cookies pros/cons
-
-* Pro: supported by all browsers
-* Pro: can be isolated from javascript
-* Con: Only small values (4096 byte limit)
-* Con: Sent to server on every HTTP request (per domain)
-
-</script></section>
-
-
-
-
-<section data-markdown><script type="text/template">
-
-## Cookie security
+## Cookie security flags
 
 * `Secure` - This cookie is only sent over `https://` requests, not `http://`
   * Cookies can't be intercepted at network level
@@ -193,15 +236,14 @@
 </script></section>
 
 
-
 <section data-markdown><script type="text/template">
 
-## Same origin policy
+## Cookies pros/cons
 
-* Very important web security mechanism
-* Websites can only read data that they wrote, not data of other sites:
-  * `funny-cat-pictures.com` can't read cookies set by `bank-of-america.com`
-* "website" = URL scheme (http/https), domain, port
+* Pro: supported by all browsers
+* Pro: can be isolated from javascript, making XSS attacks harder
+* Con: Only small values (4096 byte limit)
+* Con: Sent to server on every HTTP request, wastes bandwidth
 
 </script></section>
 
@@ -210,7 +252,135 @@
 
 <section data-markdown><script type="text/template">
 
-## DataBases
+## WebSQL (deprecated)
+
+* Many browsers provided access to an SQLite DB for every website
+* Don't use this
+  * It is being removed from browsers
+  * Wasn't a good idea to standardize on SQLite quirks
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## localStorage
+
+* `localStorage.setItem(key, value)`
+  * Stores `value` into browser storage space as `key` entry
+  * Both `value` and `key` must be strings
+* `value = localStorage.getItem(key)`
+  * Retrieves the value of `key` entry
+* `localStorage.clear()`
+  * Deletes all keys from storage space
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## sessionStorage
+
+* Works the same as `localStorage` except for data life-time
+* `localStorage` exists until data is deleted, even if browser restarted or computer rebooted
+* `sessionStorage` goes away when browser is restarted, but stays across page reloads
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Sychronous writes
+
+    localStorage.setItem(key, value);
+
+* When `localStorage.setItem()` returns, data is guaranteed to be saved to disk
+* So, user is free to close page
+* Problem: While `setItem` is running, javascript and whole page is frozen!
+  * Bad user experience
+  * Not fixable with `localStorage` API
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## IndexedDB
+
+* The most powerful storage option for browsers
+* `localStorage` is OK for small items like user preferences
+* But IndexedDB is best for anything larger/more complex
+  * More later...
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Tracking
+
+* Browser storage has a dark-side
+* Often used for tracking users
+* Even when you try to delete all storage for a website, you might not get them all
+  * [Evercookies](https://en.wikipedia.org/wiki/Evercookie)
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Exercise: localStorage
+
+1. Open the browser console (control-shift-i)
+1. Set the key `"a"` to `"hello"`
+1. Reload the browser
+  * Retrieve the key `"a"` to verify it's still there
+1. Go to a different website
+  * Retrieve the key `"a"`
+    * Is it gone? Why not?
+
+</script></section>
+
+
+
+<section>
+
+<p data-markdown>
+## Exercise: devtools
+</p>
+
+<div class="left">
+    <img src="devtools.png" style="float: left; border:0px; background-color: white" />
+</div>
+
+<div class="right"><p data-markdown>
+* Open devtools (control-shift-i) and find the Applications tab
+* Find your localStorage entry. Look at other sites: what are they storing on your browser?
+</p></div>
+
+</section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## 15 minute break
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Database interfaces
 
 * SQL: Structured Query Language
       SELECT * FROM table WHERE ...
@@ -222,6 +392,7 @@
   * SQL DBs are built on KV stores
 
 </script></section>
+
 
 
 
@@ -299,7 +470,7 @@
 
 * Sometimes DB designers deliberately choose to keep multiple copies of same data
   * Usually for efficiency reasons
-    * [Locality of reference](https://en.wikipedia.org/wiki/Locality_of_reference): It's cheap to access something near-by something you've already accessed
+    * [Locality of reference](https://en.wikipedia.org/wiki/Locality_of_reference): It's cheap to access something nearby something you've already accessed
   * This is **caching** so be careful
     * "There are only two hard problems in computer science: cache invalidation and naming things"
 
@@ -426,23 +597,6 @@ print "OK, transfer complete!"
 
 
 
-<section data-markdown><script type="text/template">
-
-## Repeatable Reads
-
-* Even read-only groups of operations must be in transactions
-* Transactions see "snapshots" of the DB: does not change throughout the transaction
-
-<pre class="acid">
-<span>print A -> $500</span>
-                   <span style="color:red">A -= $100</span>
-<span>print A -> $500</span>
-</pre>
-
-</script></section>
-
-
-
 
 <section data-markdown><script type="text/template">
 
@@ -457,6 +611,12 @@ print "OK, transfer complete!"
   * Durable: Permanently saved on chain (except for re-orgs)
 
 </script></section>
+
+
+
+
+
+
 
 
 
@@ -512,53 +672,25 @@ print "OK, transfer complete!"
 
 
 
-
-
 <section data-markdown><script type="text/template">
 
-## localStorage
+## Repeatable Reads
 
-* `localStorage.setItem(key, value)`
-  * Stores `value` into browser storage space as `key` entry
-  * Both `value` and `key` must be strings
-* `value = localStorage.getItem(key)`
-  * Retrieves the value of `key` entry
-* `localStorage.clear()`
-  * Deletes all keys from storage space
+* Even read-only groups of operations must be in transactions
+* In MVCC, transactions see "snapshots" of the DB: does not change throughout the transaction
+
+<pre class="acid">
+<span>print A -> $500</span>
+                   <span style="color:red">print A -> $500</span>
+                   <span style="color:red">A -= $100</span>
+                   <span style="color:red">print A -> $400</span>
+<span>print A -> $500</span>
+</pre>
 
 </script></section>
 
 
 
-<section data-markdown><script type="text/template">
-
-## Sychronous writes
-
-    localStorage.setItem(key, value);
-
-* When `localStorage.setItem()` returns, data is guaranteed to be saved to disk
-* So, user is free to close page
-* Problem: While `setItem` is running, javascript and whole page is frozen!
-  * Bad user experience
-  * Not fixable with `localStorage` API
-
-</script></section>
-
-
-<section data-markdown><script type="text/template">
-
-## Exercise: localStorage
-
-1. Open the browser console (control-shift-i)
-1. Set the key `"a"` to `"hello"`
-1. Reload the browser
-  * Retrieve the key `"a"` to verify it's still there
-1. Go to a different website
-  * Retrieve the key `"a"`
-    * Is it gone? Why not?
-1. Clear your localStorage
-
-</script></section>
 
 
 
@@ -663,7 +795,7 @@ print "OK, transfer complete!"
 
 <section data-markdown><script type="text/template">
 
-## JSON problem: all-or-nothing
+## JSON problem: not seekable
 
 * Most JSON parsers require you parse the entire string to read anything
 
@@ -688,7 +820,7 @@ print "OK, transfer complete!"
   * Binary (solves redundancy)
   * Can be parsed much faster than JSON, but still requires parsing whole value
 * Flat buffers, Cap'n proto
-  * Partial parsing
+  * Seekable
 
 </script></section>
 
@@ -765,21 +897,6 @@ print "OK, transfer complete!"
 
 
 
-<section data-markdown><script type="text/template">
-
-## IndexedDB
-
-* Most powerful data-base available to browsers
-  * Standardized, works in all modern browsers
-  * Can store more than just strings (actually it has its own [serialization system](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm))
-  * Fairly flexible indices
-  * Supports DB upgrades
-  * Asynchronous interface (use [idb](https://www.npmjs.com/package/idb) to enable `await`)
-
-</script></section>
-
-
-
 
 <section data-markdown><script type="text/template">
 
@@ -792,6 +909,40 @@ print "OK, transfer complete!"
 * Used to iterate over data tables
 
 </script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## IndexedDB
+
+* Most powerful data-base available to browsers
+  * Standardized, works in all modern browsers
+  * Can store more than just strings (actually it has its own [serialization system](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm))
+  * Transactions, cursors, indices
+  * Supports DB upgrades
+  * Asynchronous interface (use [idb](https://www.npmjs.com/package/idb) to enable `await`)
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Why transactions in a browser?
+
+* Only one person is accessing the DB at a time, why worry about transactions?
+  * If browser is closed/crashes, atomic transactions prevent partial writes
+  * Or, maybe user has your site open in 2 tabs
+  * Similarly, you have multiple async callbacks on your page
+    * Suppose a websocket message comes at the same time user presses a button
+  * Service workers are browser "background processes"
+
+</script></section>
+
+
+
 
 
 
