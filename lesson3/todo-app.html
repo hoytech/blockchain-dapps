@@ -1,0 +1,35 @@
+<style>
+body { font-size: 20px; }
+div { margin-top: 20px; }
+
+ul > li {
+  margin-top: 10px;
+}
+</style>
+
+<h1>Lab 3: Todo App</h1>
+
+<div>Create a todo tracking application that stores the todo items in your browser using IndexedDB. Your submission should be a single javascript file, ie <code>App.js</code>. <b>Do not submit your whole react project</b> or you will receive 0 (but you can re-submit).</div>
+
+<div>The point of this lab is to get experience using IndexedDB, which is the most powerful browser storage that works across all browsers.</div>
+
+<ul>
+  <li>Create a new react project using <a href="https://reactjs.org/docs/create-a-new-react-app.html">create-react-app</a></li>
+  <li>Install the idb package: <pre>npm i --save idb</pre></li>
+  <li>Download the file <a href="App.js">App.js</a> and put it into the src directory in your app. It is a starting point you can use.</li>
+  <li>
+    Edit the App.js file, and look for the places that say EDIT ME. Replace them with code that implements at least the following:
+    <ul>
+      <li>Saves new todo items to IndexedDB (check they appear in devtools).</li>
+      <li>Displays the list of todo items on the page (make sure they appear after refreshing the browser).</li>
+      <li>Marking todo items as completed.</li>
+    </ul>
+  </li>
+  <li>
+    BONUS:
+    <ul>
+      <li>Have a way to filter todo items by status (ie only open or closed), or by priority (high/medium/low). Use indices so that you don't have to loop over all items.</li>
+      <li>Style the app so it looks nice!</li>
+    </ul>
+  </li>
+</ul>
