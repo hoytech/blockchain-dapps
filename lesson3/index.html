@@ -347,15 +347,68 @@ print "OK, transfer complete!"
 
 ## Blockchain vs. DB transactions
 
-* Very similar: not a coincidence
+* Same name: not a coincidence
 * Remember, a blockchain *is* a DB
 * Blockchain transactions guarantee ACID
-  * Atomic: Transaction can't be "half applied"
-  * Consistent: You can't steal money
+  * Atomic: Transaction cannot be "half applied"
+  * Consistent: You can't steal/counterfeit money
   * Isolated: Only one is executed at a time
   * Durable: Permanently saved on chain (except for re-orgs)
 
 </script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## How are transactions implemented?
+
+* Two main strategies:
+  * Locking
+    * Traditional way: conceptually simpler
+  * Multi-Version Concurrency Control (MVCC) 
+    * Clients spend less time waiting
+    * Can use more memory than locking
+
+</script></section>
+
+
+<section>
+
+<p data-markdown>
+## Locking
+</p>
+
+<div class="left">
+    <img src="locking.svg" style="float: left; border:0px; background-color: white" />
+</div>
+
+<div class="right"><p data-markdown>
+* Only one process can access pages that have been modified (or read!)
+* Two-phase locking: First you acquire locks, then you release
+</p></div>
+
+</section>
+
+
+<section>
+
+<p data-markdown>
+## MVCC
+</p>
+
+<div class="left">
+    <img src="mvcc.svg" style="float: left; border:0px; background-color: white" />
+</div>
+
+<div class="right"><p data-markdown>
+* Any modifications create their own version of the DB (but mostly shared, so efficient)
+* Readers don't block writers, writers don't block readers
+</p></div>
+
+</section>
+
+
 
 
 
@@ -520,6 +573,92 @@ print "OK, transfer complete!"
   * Can be parsed much faster than JSON, but still requires parsing whole value
 * Flat buffers, Cap'n proto
   * Partial parsing
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Indices (indexes)
+
+    users.put("Smith",   { firstName: "John", age: 21 });
+    users.put("Taylor",  { firstName: "Dona", age: 47 });
+    users.put("Jackson", { firstName: "Mike", age: 34 });
+
+* In the above data-set, you can quickly look-up by last name (the key)
+* But if you want to look up by `firstName`, you have to loop over all the records
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Add an index
+
+    users.put("Smith",   { firstName: "John", age: 21 });
+    users.put("Taylor",  { firstName: "Dona", age: 47 });
+    users.put("Jackson", { firstName: "Mike", age: 34 });
+    firstNameIndex.put("John", "Smith");
+    firstNameIndex.put("Dona", "Taylor");
+    firstNameIndex.put("Mike", "Jackson");
+
+* Now, to lookup user with firstName `Dona`:
+      let lastName = firstNameIndex.get("Dona");
+      let user = users.get(lastName);
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## Binary search
+
+<img src="binary-search.svg" style="background-color: white" />
+
+* It's easy to find an element in a sorted array
+* `O(log(n))` steps required
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## How an index works
+
+<img src="binary-search-index.svg" style="background-color: white" />
+
+* An index is just another "mini DB" where each record points to the "main DB"
+* Index keys are from the values of the main DB
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Indices: More
+
+* You can have many indices for a single DB
+* Indices usually support duplicate records (many people can have same first name)
+  * But not always: sometimes you want to ensure a **unique** index (student ID number)
+* Some values can be left out of a **partial** index (only active students)
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## IndexedDB
+
+* Most powerful data-base available to browsers
+  * Standardized, works in all modern browsers
+  * Can store more than just strings (actually it has its own [serialization system](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm))
+  * Fairly flexible indices
+  * Supports DB upgrades
+  * Asynchronous interface (use [idb](https://www.npmjs.com/package/idb) to enable `await`)
 
 </script></section>
 
