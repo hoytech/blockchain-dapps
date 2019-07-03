@@ -959,6 +959,106 @@ print "OK, transfer complete!"
 
 
 
+<section data-markdown><script type="text/template">
+
+## Create a DB
+
+    const dbPromise = idb.openDB('databaseName', 1, {
+        upgrade(db) {
+            let store = db.createObjectStore('storeName', {
+                            keyPath: 'id',
+                            autoIncrement: true,
+                        });
+
+            store.createIndex('indexName', 'indexField');
+        }
+    });
+
+* This creates an store inside a DB
+* `autoIncrement`: `id` primary key is set to next available number 
+* `idb` wraps everything in promises
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Add item to DB
+
+    let db = await dbPromise;
+    let tx = db.transaction('storeName', 'readwrite');
+
+    tx.store.add({
+        indexField: "...",
+    });
+
+    await tx.done;
+
+* `await dbPromise` returns the DB, when ready
+* Create a new `readwrite` transaction for store `storeName`, and add item (no `id` required, because autoincrement)
+* Commit transaction
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## Get all items in a store
+
+    let db = await dbPromise;
+    let items = await db.getAll('storeName');
+
+* Return a big array of all items
+* Not efficient if you have many items
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## Get all with certain index value 
+
+    let db = await dbPromise;
+    let items = await db.getAllFromIndex(
+                          'storeName',
+                          'indexName',
+                          value
+                      );
+
+* Uses an index, so much more efficient than looping over all items in store
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
+## Update an item
+
+    let db = await dbPromise;
+    let tx = db.transaction('storeName', 'readwrite');
+
+    let item = await db.get('storeName', id);
+    item.field = 'new value';
+    await db.put('storeName', item);
+
+    await tx.done;
+
+* This automatically updates indices for you
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Lab 3: Todo App
+
+[todo-app.html](todo-app.html)
+
+</script></section>
+
 
 
 
