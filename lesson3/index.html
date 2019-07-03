@@ -207,6 +207,107 @@
 
 
 
+
+<section data-markdown><script type="text/template">
+
+## DataBases
+
+* SQL: Structured Query Language
+      SELECT * FROM table WHERE ...
+  * Standard language for interacting with DBs
+
+* Key-value stores
+      set(key, value)
+  * More primitive, sometimes more flexible, sometimes more efficient
+  * SQL DBs are built on KV stores
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## Primary keys
+
+<pre>
+{
+  <span class="highlight">id: 82371</span>,
+  relationship: "customer",
+  name: "John Smith",
+  address: "123 Main St."
+}
+</pre>
+
+* Most data-bases require every record to have a unique ID
+  * Unique means no other record can have the same ID
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## DB Normalization
+
+<pre>
+{                             {
+  id: 1992752,                  id: 1992773,
+  orderAmount: "$100",          orderAmount: "$50",
+  name: "John Smith",           name: "John Smith",
+  address: "123 Main St."       address: "123 Main St."
+}                             }
+</pre>
+
+* Let's say we have a table of "orders", and we copy the important bits of the customer record into it
+  * What if you need to update customer address?
+* Normalization: Data should only exist in one place
+  * Use **foreign keys**
+
+</script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Foreign keys
+
+<pre>
+{                                {
+  id: 82371,                       id: 1992752,
+  relationship: "customer",        orderAmount: "$100",
+  name: "John Smith",              <span class="highlight">customerId: 82371</span>
+  address: "123 Main St."        }
+}                                {
+                                   id: 1992773,
+                                   orderAmount: "$50",
+                                   <span class="highlight">customerId: 82371</span>
+                                 }
+</pre>
+
+* A link from one table to another
+  * Refer to entries in other tables by their primary keys
+
+</script></section>
+
+
+
+<section data-markdown><script type="text/template">
+
+## De-Normalization
+
+* Sometimes DB designers deliberately choose to keep multiple copies of same data
+  * Usually for efficiency reasons
+    * [Locality of reference](https://en.wikipedia.org/wiki/Locality_of_reference): It's cheap to access something near-by something you've already accessed
+  * This is **caching** so be careful
+    * "There are only two hard problems in computer science: cache invalidation and naming things"
+
+</script></section>
+
+
+
+
 <section data-markdown><script type="text/template">
 
 ## ACID
