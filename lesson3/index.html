@@ -431,6 +431,21 @@ print "OK, transfer complete!"
 
 <section data-markdown><script type="text/template">
 
+## Sychronous writes
+
+    localStorage.setItem(key, value);
+
+* When `localStorage.setItem()` returns, data is guaranteed to be saved to disk
+* So, user is free to close page
+* Problem: While `setItem` is running, javascript and whole page is frozen!
+  * Bad user experience
+  * Not fixable with `localStorage` API
+
+</script></section>
+
+
+<section data-markdown><script type="text/template">
+
 ## Exercise: localStorage
 
 1. Open the browser console (control-shift-i)
@@ -661,6 +676,22 @@ print "OK, transfer complete!"
   * Asynchronous interface (use [idb](https://www.npmjs.com/package/idb) to enable `await`)
 
 </script></section>
+
+
+
+
+<section data-markdown><script type="text/template">
+
+## Cursors
+
+<img src="cursor.svg" style="background-color: white" />
+
+* A cursor is a pointer to a data record
+* Multiple cursors can be active at once
+* Used to iterate over data tables
+
+</script></section>
+
 
 
 
