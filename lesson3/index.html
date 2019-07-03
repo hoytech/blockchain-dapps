@@ -132,6 +132,7 @@
 
 * Browser storage options
 * Database fundamentals
+* IndexedDB
 
 </script></section>
 
@@ -483,10 +484,11 @@
 
 ## ACID
 
-* Atomic
-* Consistent
-* Isolated
-* Durable
+* Properties we want from our DBs
+  * Atomic
+  * Consistent
+  * Isolated
+  * Durable
 
 </script></section>
 
@@ -531,7 +533,6 @@ pre.acid {
 
 ## Consistent
 
-* Suppose our DB has a constraint where it verifies total balances
 * What if there is a bug that creates money out of nowhere?
 
 <pre class="acid">
@@ -539,19 +540,23 @@ pre.acid {
   <span>B += $<span style="color:red">101</span></span>
 </pre>
 
+* You can create consistency checks in DBs by using **constraints**
+
 </script></section>
 
 <section data-markdown><script type="text/template">
 
 ## Isolated
 
-* If somebody else (say a reporting script) sees partial results of your operations
+* If somebody else is accessing the DB at the same time you are, they could partial results of operations
 * This would report $100 being missing:
 
 <pre class="acid">
-<span>A -= $100</span>
-            <span>print "Total = ", (A + B)</span>
-<span>B += $100</span>
+Time  You         Reporting script
+  |   <span>A -= $100</span>
+  |               <span>let total = A + B</span>
+  |   <span>B += $100</span>
+  V
 </pre>
 
 </script></section>
@@ -560,13 +565,13 @@ pre.acid {
 
 ## Durable
 
-* After performing your operations, there should be a guarantee that they won't be forgotten:
+* After performing your operations, there should be a guarantee that they won't be lost:
 
 <pre class="acid">
 <span>A -= $100</span>
 <span>B += $100</span>
 print "OK, transfer complete!"
-<span style="color:red">**COMPUTER CRASH**</span>
+<span style="color:red">**COMPUTER CRASH BEFORE DATA WRITTEN**</span>
 </pre>
 
 </script></section>
@@ -664,7 +669,7 @@ print "OK, transfer complete!"
 
 <div class="right"><p data-markdown>
 * Any modifications create their own version of the DB (but mostly shared, so efficient)
-* Readers don't block writers, writers don't block readers
+* Writers don't block readers, readers don't block anybody
 </p></div>
 
 </section>
@@ -730,7 +735,7 @@ print "OK, transfer complete!"
 
       eval("(" + json + ")")
 
-* But what if a hacker can pass this "JSON" to you:
+* But what if a hacker passes this "JSON" to you:
 
       function(){alert('XSS hack')}()
 
@@ -913,6 +918,17 @@ print "OK, transfer complete!"
 
 
 
+
+
+
+<section data-markdown><script type="text/template">
+
+## 15 minute break
+
+</script></section>
+
+
+
 <section data-markdown><script type="text/template">
 
 ## IndexedDB
@@ -934,9 +950,8 @@ print "OK, transfer complete!"
 
 * Only one person is accessing the DB at a time, why worry about transactions?
   * If browser is closed/crashes, atomic transactions prevent partial writes
-  * Or, maybe user has your site open in 2 tabs
-  * Similarly, you have multiple async callbacks on your page
-    * Suppose a websocket message comes at the same time user presses a button
+  * User may have your site open in 2 tabs
+  * You may have multiple async callbacks on your page
   * Service workers are browser "background processes"
 
 </script></section>
