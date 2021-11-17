@@ -1,4 +1,4 @@
-var fetch = require('node-fetch');
+var fetch = require('cross-fetch');
 
 function tryLogin(password) {
     return fetch('http://localhost:7681/login', {
